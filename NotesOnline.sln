@@ -1,0 +1,54 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27004.2002
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NotesOnlineService", "NotesOnlineService\NotesOnlineService.csproj", "{3C1D08A9-E333-4E84-8313-6E2AB5F889D5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NoteOnlineCore", "NoteOnlineCore\NoteOnlineCore.csproj", "{99FC4063-E209-465E-BFB4-6B4961A1DD16}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain層", "Domain層", "{4E0F8A62-1AC9-43E5-AA24-C1BCD33BE7E3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Service層", "Service層", "{753C06B0-C000-4296-93C5-0FB4AAD26CDC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NotesOnlineRepository", "NotesOnlineRepository\NotesOnlineRepository.csproj", "{B3C30142-A494-448D-8EB3-F10589AEA573}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Repository層", "Repository層", "{FDD054FE-B4F5-4B74-A2A7-1F01F8D75620}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NotesOnline", "NotesOnline\NotesOnline.csproj", "{C7CCB49C-92DA-4B38-A6E9-112BF6F79A43}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3C1D08A9-E333-4E84-8313-6E2AB5F889D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C1D08A9-E333-4E84-8313-6E2AB5F889D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C1D08A9-E333-4E84-8313-6E2AB5F889D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C1D08A9-E333-4E84-8313-6E2AB5F889D5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{99FC4063-E209-465E-BFB4-6B4961A1DD16}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{99FC4063-E209-465E-BFB4-6B4961A1DD16}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{99FC4063-E209-465E-BFB4-6B4961A1DD16}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{99FC4063-E209-465E-BFB4-6B4961A1DD16}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B3C30142-A494-448D-8EB3-F10589AEA573}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B3C30142-A494-448D-8EB3-F10589AEA573}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B3C30142-A494-448D-8EB3-F10589AEA573}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B3C30142-A494-448D-8EB3-F10589AEA573}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C7CCB49C-92DA-4B38-A6E9-112BF6F79A43}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C7CCB49C-92DA-4B38-A6E9-112BF6F79A43}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C7CCB49C-92DA-4B38-A6E9-112BF6F79A43}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C7CCB49C-92DA-4B38-A6E9-112BF6F79A43}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{3C1D08A9-E333-4E84-8313-6E2AB5F889D5} = {753C06B0-C000-4296-93C5-0FB4AAD26CDC}
+		{99FC4063-E209-465E-BFB4-6B4961A1DD16} = {4E0F8A62-1AC9-43E5-AA24-C1BCD33BE7E3}
+		{B3C30142-A494-448D-8EB3-F10589AEA573} = {FDD054FE-B4F5-4B74-A2A7-1F01F8D75620}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {38778DD0-C746-45BC-94EE-624E1E48C999}
+	EndGlobalSection
+EndGlobal

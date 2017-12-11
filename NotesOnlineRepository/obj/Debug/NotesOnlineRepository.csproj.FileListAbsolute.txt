@@ -1,0 +1,14 @@
+C:\Users\acer\Desktop\NotesOnline\NotesOnlineRepository\bin\Debug\NotesOnlineRepository.dll.config
+C:\Users\acer\Desktop\NotesOnline\NotesOnlineRepository\bin\Debug\NotesOnlineRepository.dll
+C:\Users\acer\Desktop\NotesOnline\NotesOnlineRepository\bin\Debug\NotesOnlineRepository.pdb
+C:\Users\acer\Desktop\NotesOnline\NotesOnlineRepository\bin\Debug\EntityFramework.dll
+C:\Users\acer\Desktop\NotesOnline\NotesOnlineRepository\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\acer\Desktop\NotesOnline\NotesOnlineRepository\bin\Debug\NoteOnlineCore.dll
+C:\Users\acer\Desktop\NotesOnline\NotesOnlineRepository\bin\Debug\NoteOnlineCore.pdb
+C:\Users\acer\Desktop\NotesOnline\NotesOnlineRepository\bin\Debug\NoteOnlineCore.dll.config
+C:\Users\acer\Desktop\NotesOnline\NotesOnlineRepository\bin\Debug\EntityFramework.xml
+C:\Users\acer\Desktop\NotesOnline\NotesOnlineRepository\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\acer\Desktop\NotesOnline\NotesOnlineRepository\obj\Debug\NotesOnlineRepository.csprojResolveAssemblyReference.cache
+C:\Users\acer\Desktop\NotesOnline\NotesOnlineRepository\obj\Debug\NotesOnlineRepository.csproj.CoreCompileInputs.cache
+C:\Users\acer\Desktop\NotesOnline\NotesOnlineRepository\obj\Debug\NotesOnlineRepository.dll
+C:\Users\acer\Desktop\NotesOnline\NotesOnlineRepository\obj\Debug\NotesOnlineRepository.pdb
