@@ -18,6 +18,7 @@ var login_component_1 = require("./components/login/login.component");
 var footer_component_1 = require("./components/footer/footer.component");
 var authentication_service_1 = require("./services/authentication.service"); // Service 登入服務
 var ngx_loading_1 = require("ngx-loading"); /* 與 materialize.css => 5120行 衝突 */
+var shared_service_1 = require("./services/shared-service");
 var AppModule = (function () {
     function AppModule() {
     }
@@ -29,6 +30,7 @@ AppModule = __decorate([
             platform_browser_1.BrowserModule,
             http_1.HttpModule,
             forms_1.FormsModule,
+            forms_1.ReactiveFormsModule,
             router_1.RouterModule.forRoot([
                 { path: '', redirectTo: 'login', pathMatch: 'full' },
                 { path: 'login', component: login_component_1.LoginComponent },
@@ -54,7 +56,8 @@ AppModule = __decorate([
         bootstrap: [app_component_1.AppComponent],
         providers: [
             { provide: 'BASE_URL', useFactory: getBaseUrl },
-            authentication_service_1.AuthenticationService
+            authentication_service_1.AuthenticationService,
+            shared_service_1.SharedService // 共用Service
         ]
     })
 ], AppModule);

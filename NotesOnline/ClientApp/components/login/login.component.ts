@@ -1,6 +1,7 @@
 ﻿import { Component , OnInit} from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthenticationService, User } from '../../services/authentication.service'
+import { SharedService } from "../../services/shared-service";
 
 @Component({
     selector: 'login',
@@ -15,7 +16,8 @@ export class LoginComponent {
 
     constructor(
         private _router: Router,
-        private _service: AuthenticationService) { }
+        private _service: AuthenticationService,
+        private _sharedService: SharedService ) { }
 
 
     public loading = false; //Spinner
@@ -28,6 +30,9 @@ export class LoginComponent {
                 if (result.access_token) { // 成功token有值
                     localStorage.setItem("user", this.user.account);
                     localStorage.setItem("access_token", result.access_token);
+
+                    this._sharedService.emitChange(this.user.account +' is Login.');
+
                     this._router.navigate(['Home']);
                 }
                 this.loading = false;

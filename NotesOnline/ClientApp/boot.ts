@@ -2,7 +2,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { HttpModule } from '@angular/http';
-import { FormsModule } from '@angular/forms'; // 有雙向綁定 [(ngModel)] 要加這個
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'; // 有雙向綁定 [(ngModel)] 要加這個
 
 
 import { AppComponent } from './components/app/app.component';
@@ -11,8 +11,11 @@ import { NavMenuComponent } from './components/navmenu/navmenu.component';
 import { LoginComponent } from './components/login/login.component';
 import { FooterComponent } from './components/footer/footer.component';
 
+
+
 import { AuthenticationService } from './services/authentication.service'; // Service 登入服務
 import { LoadingModule, ANIMATION_TYPES } from 'ngx-loading'; /* 與 materialize.css => 5120行 衝突 */
+import { SharedService } from "./services/shared-service";
 
 
 @NgModule({
@@ -20,6 +23,7 @@ import { LoadingModule, ANIMATION_TYPES } from 'ngx-loading'; /* 與 materialize
         BrowserModule,
         HttpModule,
         FormsModule,
+        ReactiveFormsModule,
         RouterModule.forRoot([  
             { path: '', redirectTo: 'login', pathMatch: 'full' },
             { path: 'login', component: LoginComponent },
@@ -45,7 +49,8 @@ import { LoadingModule, ANIMATION_TYPES } from 'ngx-loading'; /* 與 materialize
     bootstrap: [AppComponent],
     providers: [
         { provide: 'BASE_URL', useFactory: getBaseUrl }, 
-        AuthenticationService
+        AuthenticationService,
+        SharedService // 共用Service
     ]
 })
 export class AppModule { }

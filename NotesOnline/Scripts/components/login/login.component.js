@@ -12,10 +12,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
 var authentication_service_1 = require("../../services/authentication.service");
+var shared_service_1 = require("../../services/shared-service");
 var LoginComponent = (function () {
-    function LoginComponent(_router, _service) {
+    function LoginComponent(_router, _service, _sharedService) {
         this._router = _router;
         this._service = _service;
+        this._sharedService = _sharedService;
         this.user = new authentication_service_1.User('', '');
         this.errorMsg = '';
         this.loading = false; //Spinner
@@ -27,6 +29,7 @@ var LoginComponent = (function () {
             if (result.access_token) {
                 localStorage.setItem("user", _this.user.account);
                 localStorage.setItem("access_token", result.access_token);
+                _this._sharedService.emitChange(_this.user.account + ' is Login.');
                 _this._router.navigate(['Home']);
             }
             _this.loading = false;
@@ -46,7 +49,8 @@ LoginComponent = __decorate([
         styleUrls: ['./ClientApp/components/login/login.component.css']
     }),
     __metadata("design:paramtypes", [router_1.Router,
-        authentication_service_1.AuthenticationService])
+        authentication_service_1.AuthenticationService,
+        shared_service_1.SharedService])
 ], LoginComponent);
 exports.LoginComponent = LoginComponent;
 //# sourceMappingURL=login.component.js.map

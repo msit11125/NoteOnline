@@ -29,7 +29,7 @@ var AuthenticationService = (function () {
     AuthenticationService.prototype.logout = function () {
         localStorage.removeItem("user");
         localStorage.removeItem("access_token");
-        this._router.navigate(['Login']);
+        this._router.navigateByUrl('/login'); //在Service中 這種navigate寫法 才有效果
     };
     AuthenticationService.prototype.login = function (user) {
         // Owin 取Token協定Content-Type: application/x-www-form-urlencoded
@@ -43,7 +43,7 @@ var AuthenticationService = (function () {
     };
     AuthenticationService.prototype.checkCredentials = function () {
         if (localStorage.getItem("user") === null) {
-            this._router.navigate(['Login']);
+            this._router.navigateByUrl('/login');
         }
     };
     return AuthenticationService;

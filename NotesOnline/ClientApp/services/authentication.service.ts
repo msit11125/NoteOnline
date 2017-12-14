@@ -24,7 +24,7 @@ export class AuthenticationService {
         localStorage.removeItem("user");
         localStorage.removeItem("access_token");
 
-        this._router.navigate(['Login']);
+        this._router.navigateByUrl('/login'); //在Service中 這種navigate寫法 才有效果
     }
 
     login(user) {
@@ -44,7 +44,7 @@ export class AuthenticationService {
 
     checkCredentials() {
         if (localStorage.getItem("user") === null) {
-            this._router.navigate(['Login']);
+            this._router.navigateByUrl('/login');
         }
     }
 }

@@ -12,24 +12,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var AppComponent = (function () {
     function AppComponent() {
-        this.userName = this.getUserLogin();
     }
-    // 登入字條
-    AppComponent.prototype.getUserLogin = function () {
-        if (localStorage.getItem('user')) {
-            return "|登入中:" + localStorage.getItem('user');
-        }
-        return "|尚未登入";
+    AppComponent.prototype.OnInit = function () {
     };
     AppComponent.prototype.ngAfterViewInit = function () {
         $('.button-collapse').sideNav();
     };
     return AppComponent;
 }());
-__decorate([
-    core_1.Input(),
-    __metadata("design:type", String)
-], AppComponent.prototype, "user", void 0);
 AppComponent = __decorate([
     core_1.Component({
         selector: 'my-app',
