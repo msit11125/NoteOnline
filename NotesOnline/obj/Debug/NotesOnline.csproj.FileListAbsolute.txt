@@ -78,3 +78,6 @@ C:\Users\acer\Desktop\NotesOnline\NotesOnline\obj\Debug\NotesOnline.csprojResolv
 C:\Users\acer\Desktop\NotesOnline\NotesOnline\obj\Debug\NotesOnline.csproj.CoreCompileInputs.cache
 C:\Users\acer\Desktop\NotesOnline\NotesOnline\obj\Debug\NotesOnline.dll
 C:\Users\acer\Desktop\NotesOnline\NotesOnline\obj\Debug\NotesOnline.pdb
+C:\Users\acer\Desktop\NotesOnline\NotesOnline\bin\HtmlAgilityPack.dll
+C:\Users\acer\Desktop\NotesOnline\NotesOnline\bin\HtmlAgilityPack.pdb
+C:\Users\acer\Desktop\NotesOnline\NotesOnline\bin\HtmlAgilityPack.xml

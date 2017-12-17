@@ -1,0 +1,102 @@
+﻿<div style="background:linear-gradient(#373737, #a3a3a3)">
+    <div class="container">
+        <div class="row card" style="margin-top:5%;">
+            <div class="card-content">
+                <span class="blue-text text-darken-2 card-title">
+                    <i class="material-icons left">cloud</i>
+                   Register 註冊
+                </span>
+
+                <div class="panel-body">
+                    <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <label for="account">帳號</label>
+                                <input id="account" type="text" class="validate" [(ngModel)]="userData.account"
+                                       formControlName="account">
+                                <control-messages [control]="userForm.controls.account"></control-messages>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <label for="password">密碼</label>
+                                <input id="password" type="password" class="validate" [(ngModel)]="userData.password"
+                                       formControlName="password">
+                                <control-messages [control]="userForm.controls.password"></control-messages>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <label for="confirmPassword">確認密碼</label>
+                                <input id="confirmPassword" type="password" class="validate"
+                                       formControlName="confirmPassword">
+                                <control-messages [control]="userForm.controls.confirmPassword"></control-messages>
+                                <div class="error" *ngIf="userForm.hasError('mismatchedPasswords')">
+                                    Passwords do not match
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <label for="email">Email</label>
+                                <input id="email" type="text" class="validate" [(ngModel)]="userData.email"
+                                       formControlName="email">
+                                <control-messages [control]="userForm.controls.email"></control-messages>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <label for="name">姓名</label>
+                                <input id="name" type="text" class="validate" [(ngModel)]="userData.name"
+                                       formControlName="name">
+                                <control-messages [control]="userForm.controls.name"></control-messages>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <label for="phoneNumber">電話</label>
+                                <input id="phoneNumber" type="text" class="validate" [(ngModel)]="userData.phoneNumber"
+                                       formControlName="phoneNumber">
+                                <control-messages [control]="userForm.controls.phoneNumber"></control-messages>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <label for="address">住址</label>
+                                <input id="address" type="text" class="validate" [(ngModel)]="userData.address"
+                                       formControlName="address">
+                                <control-messages [control]="userForm.controls.address"></control-messages>
+                            </div>
+                        </div>
+
+
+                        <div *ngFor="let f of roles" class="checkbox">
+                            <!--用$event得知是否勾選-->
+                            <input type="checkbox" id="role{{ f.id }}" (change)="onRoleToggle(f.id, $event)" />
+                            <label for="role{{ f.id }}">{{ f.name }}</label>
+                        </div>
+
+                        <hr />
+                        <button class="btn purple darken-3 waves-effect waves-light right submit" type="submit" name="action">
+                            確認註冊
+                            <i class="mdi-content-send right"></i>
+                        </button>
+
+                    </form>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+<ngx-loading [show]="loading"></ngx-loading>

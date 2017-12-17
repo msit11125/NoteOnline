@@ -15,7 +15,7 @@ namespace NotesOnlineService
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public UserService(IUnitOfWork unitOfWork,  IMapper mapper)
+        public UserService(IUnitOfWork unitOfWork, IMapper mapper)
         {
             this._unitOfWork = unitOfWork;
             this._mapper = mapper;
@@ -53,7 +53,7 @@ namespace NotesOnlineService
         /// <param name="account">帳號</param>
         /// <param name="password">密碼</param>
         /// <returns>UserVM</returns>
-        public UserVM FindUser(string account,string password)
+        public UserVM FindUser(string account, string password)
         {
             string sha256Password = password.SHA256EnCrypt();
             Users user = _unitOfWork.UsersRepository.Get(filter: u => u.Account == account && u.UserDetails.Password == sha256Password,
@@ -70,9 +70,19 @@ namespace NotesOnlineService
         }
 
 
-
+        /// <summary>
+        /// 用戶註冊
+        /// </summary>
+        /// <param name="userVM"></param>
+        /// <returns></returns>
         public UserVM UserRegister(UserVM userVM)
         {
+            //判斷是否帳號被註冊過
+            if(_unitOfWork.UsersRepository.Get(filter: u=>u.Account == userVM.Account).Any())
+            {
+                return new UserVM() { returnMsgNo = -2, returnMsg = "此帳號已被註冊過。" };
+            }
+
             //密碼加密
             string sha256Password = userVM.Password.SHA256EnCrypt();
             userVM.Password = sha256Password;
@@ -94,6 +104,9 @@ namespace NotesOnlineService
                 _unitOfWork.UserDetailsRepository.Insert(userDetail);
 
                 _unitOfWork.SaveChanges();
+
+                userVM.returnMsgNo = 1;
+                userVM.returnMsg = "註冊成功!";
                 return userVM;
             }
             catch (Exception ex)
@@ -103,12 +116,16 @@ namespace NotesOnlineService
 
         }
 
+
         private void InsertRoles(IEnumerable<int> selectIDs, Users user)
         {
-            foreach(var role in _unitOfWork.RolesRepository.Get())
+            if (selectIDs != null)
             {
-                if (selectIDs.Contains(role.RoleID))
-                    user.Roles.Add(role);
+                foreach (var role in _unitOfWork.RolesRepository.Get())
+                {
+                    if (selectIDs.Contains(role.RoleID))
+                        user.Roles.Add(role);
+                }
             }
         }
 

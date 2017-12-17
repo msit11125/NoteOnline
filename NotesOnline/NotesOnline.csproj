@@ -63,6 +63,9 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="HtmlAgilityPack, Version=1.6.5.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
+      <HintPath>..\packages\HtmlAgilityPack.1.6.5\lib\Net45\HtmlAgilityPack.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
       <Private>True</Private>
@@ -171,6 +174,7 @@
   <ItemGroup>
     <Compile Include="Api\AuthApiController.cs" />
     <Compile Include="Api\UserApiController.cs" />
+    <Compile Include="Api\VocabularyApiController.cs" />
     <Compile Include="App_Start\AutofacConfig.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
@@ -187,6 +191,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ClientApp\components\footer\footer.component.html" />
+    <Content Include="ClientApp\components\home\home.component.html" />
+    <Content Include="ClientApp\components\register\register.component.css" />
+    <Content Include="ClientApp\components\register\register.component.html" />
+    <Content Include="Content\images\DoubleRing.gif" />
+    <Content Include="ClientApp\components\vocabulary\vocabulary.component.html" />
+    <Content Include="ClientApp\components\vocabulary\vocabulary.component.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -238,7 +248,6 @@
     <Content Include="Scripts\_references.js" />
     <Content Include="ClientApp\components\app\app.component.css" />
     <Content Include="ClientApp\components\app\app.component.html" />
-    <Content Include="ClientApp\components\home\home.component.html" />
     <Content Include="ClientApp\components\login\login.component.css" />
     <Content Include="ClientApp\components\login\login.component.html" />
     <Content Include="ClientApp\components\navmenu\navmenu.component.css" />
@@ -272,9 +281,14 @@
     <TypeScriptCompile Include="ClientApp\components\login\login.component.ts" />
     <TypeScriptCompile Include="ClientApp\components\navmenu\navmenu.component.ts" />
     <TypeScriptCompile Include="ClientApp\boot.ts" />
+    <TypeScriptCompile Include="ClientApp\components\register\control-messages.component.ts" />
+    <TypeScriptCompile Include="ClientApp\components\register\register.component.ts" />
+    <TypeScriptCompile Include="ClientApp\components\vocabulary\vocabulary.component.ts" />
     <TypeScriptCompile Include="ClientApp\main.ts" />
     <TypeScriptCompile Include="ClientApp\services\authentication.service.ts" />
     <TypeScriptCompile Include="ClientApp\services\shared-service.ts" />
+    <TypeScriptCompile Include="ClientApp\services\validation.service.ts" />
+    <TypeScriptCompile Include="ClientApp\services\vocabulary.service.ts" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />

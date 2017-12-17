@@ -31,9 +31,11 @@ namespace NotesOnlineService
                 cfg.CreateMap<UserDetails, UserVM>();
                 cfg.CreateMap<UserVM, UserDetails>();
 
-                cfg.CreateMap<RoleVM, Roles>();
                 cfg.CreateMap<Roles, RoleVM>();
+                cfg.CreateMap<RoleVM, Roles>();
 
+                cfg.CreateMap<VocabularyDictionarys, VocabularyVM>();
+                cfg.CreateMap<Roles, RoleVM>();
 
             });
 

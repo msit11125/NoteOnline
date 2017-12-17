@@ -20,6 +20,7 @@ namespace NotesOnlineRepository
         public virtual DbSet<Types> Types { get; set; }
         public virtual DbSet<UserDetails> UserDetails { get; set; }
         public virtual DbSet<Users> Users { get; set; }
+        public virtual DbSet<VocabularyDictionarys> VocabularyDictionarys { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

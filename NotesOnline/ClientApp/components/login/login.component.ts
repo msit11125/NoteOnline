@@ -1,4 +1,4 @@
-﻿import { Component , OnInit} from '@angular/core';
+﻿import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthenticationService, User } from '../../services/authentication.service'
 import { SharedService } from "../../services/shared-service";
@@ -17,10 +17,17 @@ export class LoginComponent {
     constructor(
         private _router: Router,
         private _service: AuthenticationService,
-        private _sharedService: SharedService ) { }
+        private _sharedService: SharedService)
+    {
+        // 檢查登入狀態: 登入過 則不需重複登入
+        if (localStorage.getItem("user") != null && localStorage.getItem("access_token") != null) {
+            this._router.navigate(['/home']);
+        }
+    }
 
 
     public loading = false; //Spinner
+
 
     login() {
         this.loading = true;
@@ -33,7 +40,7 @@ export class LoginComponent {
 
                     this._sharedService.emitChange(this.user.account +' is Login.');
 
-                    this._router.navigate(['Home']);
+                    this._router.navigate(['/home']);
                 }
                 this.loading = false;
 

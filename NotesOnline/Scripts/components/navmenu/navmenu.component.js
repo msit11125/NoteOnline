@@ -18,7 +18,7 @@ var NavMenuComponent = (function () {
         this._sharedService = _sharedService;
         this._authenticationService = _authenticationService;
         this.userName = this.getUserLogin();
-        this.canLogOut = (this.userName == "|尚未登入") ? false : true;
+        this.canLogOut = (this.userName == "[尚未登入]") ? false : true;
         _sharedService.changeEmitted$.subscribe(function (text) {
             console.log(text); // 會得到傳過來的訊息 xxx is Login.
             _this.userName = _this.getUserLogin(); // 更新登入狀態
@@ -28,9 +28,9 @@ var NavMenuComponent = (function () {
     // 登入字條
     NavMenuComponent.prototype.getUserLogin = function () {
         if (localStorage.getItem('user')) {
-            return "|登入中:" + localStorage.getItem('user');
+            return "[" + localStorage.getItem('user') + "]";
         }
-        return "|尚未登入";
+        return "[尚未登入]";
     };
     NavMenuComponent.prototype.logOut = function () {
         var name = localStorage.getItem('user');

@@ -5129,7 +5129,18 @@ small {
   -webkit-transform-origin: 50% 0%;
           transform-origin: 50% 0%;
   visibility: hidden;
+
 }*/
+
+/*要改成這樣*/
+.backdrop {
+    z-index: 50 ;
+    position: fixed !important;
+    top: 0 ;
+    left: 0 ;
+    right: 0 ;
+    bottom: 0 ;
+}
 
 .btn, .btn-large,
 .btn-flat {

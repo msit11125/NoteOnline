@@ -21,6 +21,12 @@ var User = (function () {
     return User;
 }());
 exports.User = User;
+var UserRegisterModel = (function () {
+    function UserRegisterModel() {
+    }
+    return UserRegisterModel;
+}());
+exports.UserRegisterModel = UserRegisterModel;
 var AuthenticationService = (function () {
     function AuthenticationService(_router, http) {
         this._router = _router;
@@ -29,8 +35,11 @@ var AuthenticationService = (function () {
     AuthenticationService.prototype.logout = function () {
         localStorage.removeItem("user");
         localStorage.removeItem("access_token");
-        this._router.navigateByUrl('/login'); //在Service中 這種navigate寫法 才有效果
+        // 2.0 之後 route的name設定移除了 無法使用 this.router.navigate(['Login'])
+        // 以下這種navigate寫法 才有會效果
+        this._router.navigateByUrl('/login');
     };
+    //登入
     AuthenticationService.prototype.login = function (user) {
         // Owin 取Token協定Content-Type: application/x-www-form-urlencoded
         // let body = JSON.stringify({ grant_type:"password" , username: user.account, password: user.password });
@@ -41,10 +50,23 @@ var AuthenticationService = (function () {
         return this.http.post('/api/security/token', body, options)
             .map(function (res) { return res.json(); });
     };
+    //註冊
+    AuthenticationService.prototype.register = function (userData) {
+        var headers = new http_1.Headers({
+            'Authorization': 'Bearer ' + localStorage.getItem('access_token'),
+            'Content-Type': 'application/json'
+        });
+        return this.http.post("/api/userapi/userregister", JSON.stringify(userData), { headers: headers })
+            .map(function (res) { return res.json(); });
+    };
+    //檢查登入狀態 false:尚未登入 true:已登入
     AuthenticationService.prototype.checkCredentials = function () {
-        if (localStorage.getItem("user") === null) {
+        if (localStorage.getItem("user") === null || localStorage.getItem("access_token") === null) {
+            alert("請先登入!");
             this._router.navigateByUrl('/login');
+            return false;
         }
+        return true;
     };
     return AuthenticationService;
 }());

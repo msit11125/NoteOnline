@@ -21,6 +21,10 @@ var LoginComponent = (function () {
         this.user = new authentication_service_1.User('', '');
         this.errorMsg = '';
         this.loading = false; //Spinner
+        // 檢查登入狀態: 登入過 則不需重複登入
+        if (localStorage.getItem("user") != null && localStorage.getItem("access_token") != null) {
+            this._router.navigate(['/home']);
+        }
     }
     LoginComponent.prototype.login = function () {
         var _this = this;
@@ -30,7 +34,7 @@ var LoginComponent = (function () {
                 localStorage.setItem("user", _this.user.account);
                 localStorage.setItem("access_token", result.access_token);
                 _this._sharedService.emitChange(_this.user.account + ' is Login.');
-                _this._router.navigate(['Home']);
+                _this._router.navigate(['/home']);
             }
             _this.loading = false;
         }, function (failed) {

@@ -16,15 +16,16 @@ export class NavMenuComponent {
     // 登入字條
     getUserLogin(): string {
         if (localStorage.getItem('user')) {
-            return "|登入中:" + localStorage.getItem('user');
+            return "[" + localStorage.getItem('user') +"]";
         }
-        return "|尚未登入";
+        return "[尚未登入]";
     }
     userName: string = this.getUserLogin();
-    canLogOut: boolean = (this.userName == "|尚未登入") ? false : true ;
+    canLogOut: boolean = (this.userName == "[尚未登入]") ? false : true ;
 
     constructor(private _sharedService: SharedService,
-                private _authenticationService: AuthenticationService) {
+        private _authenticationService: AuthenticationService) {
+
         _sharedService.changeEmitted$.subscribe(
             text => {
                 console.log(text); // 會得到傳過來的訊息 xxx is Login.
