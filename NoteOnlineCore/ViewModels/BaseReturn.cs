@@ -9,7 +9,7 @@ namespace NoteOnlineCore.ViewModels
     public class BaseReturn
     {
         /// <summary>
-        /// 1: 登入成功
+        /// 1: 成功
         /// </summary>
         public int returnMsgNo { get; set; } 
         public string returnMsg { get; set; }

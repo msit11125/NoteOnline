@@ -90,8 +90,8 @@ namespace NotesOnlineService
             userVM.CreateDate = DateTime.Now;
             //建立ID
             Guid guid = Guid.NewGuid();
-            string id = guid.ToString().Substring(0, 6).ToUpper();
-            userVM.GuestID = "GUS-A01-" + DateTime.Now.Year + DateTime.Now.Month + id;
+            string ramdomID = guid.ToString().Substring(0, 6).ToUpper();
+            userVM.GuestID = "GUS-A01-" + DateTime.Now.ToString("yyyyMMddHHmm") + ramdomID;
 
 
             var user = _mapper.Map<UserVM, Users>(userVM);

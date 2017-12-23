@@ -13,13 +13,15 @@ import { FooterComponent } from './components/footer/footer.component';
 import { RegisterComponent } from "./components/register/register.component";
 import { ControlMessagesComponent } from "./components/register/control-messages.component";
 import { VocabularyComponent, SafeHtmlPipe } from "./components/vocabulary/vocabulary.component";
-
+import { ModalComponent } from './directives/modal.component';
 
 
 import { AuthenticationService } from './services/authentication.service'; // Service 登入服務
 import { SharedService } from "./services/shared-service";
 import { ValidationService } from "./services/validation.service";
 import { VocabularyService } from "./services/vocabulary.service";
+import { ModalService } from './services/modal.service';
+
 
 // 額外下載的module
 import { LoadingModule, ANIMATION_TYPES } from 'ngx-loading'; /* 與 materialize.css => 5120行 衝突 */
@@ -47,6 +49,7 @@ import { LoadingModule, ANIMATION_TYPES } from 'ngx-loading'; /* 與 materialize
       secondaryColour: '#00AA88',
       tertiaryColour: '#00AA88'
     }),
+    
   ],
   declarations: [
     AppComponent,
@@ -58,6 +61,7 @@ import { LoadingModule, ANIMATION_TYPES } from 'ngx-loading'; /* 與 materialize
     ControlMessagesComponent,
     VocabularyComponent,
     SafeHtmlPipe, //自訂Html的管道
+    ModalComponent, // 自製Modal
   ],
   bootstrap: [AppComponent],
   providers: [
@@ -66,6 +70,8 @@ import { LoadingModule, ANIMATION_TYPES } from 'ngx-loading'; /* 與 materialize
     SharedService, // 共用 Service
     ValidationService, // 驗證 Service
     VocabularyService, // 單字 Service
+    ModalService,// 自製Modal
+
   ]
 })
 export class AppModule { }

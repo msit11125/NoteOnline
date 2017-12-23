@@ -25,7 +25,7 @@ namespace NotesOnlineService
                    .ForMember(x => x.Photos, y => y.MapFrom(s => s.UserDetails.Photos))
                    .ForMember(x => x.Email, y => y.MapFrom(s => s.UserDetails.Email))
                    .ForMember(x => x.Name, y => y.MapFrom(s => s.UserDetails.Name))
-                   .ForMember(x => x.RolesIDs, y => y.MapFrom(s => s.Roles.Select(r=>r.RoleID)) )
+                   .ForMember(x => x.RolesIDs, y => y.MapFrom(s => s.Roles.Select(r => r.RoleID)))
                    .ForMember(x => x.RolesNames, y => y.MapFrom(s => s.Roles.Select(r => r.RoleName)));
 
                 cfg.CreateMap<UserDetails, UserVM>();
@@ -34,7 +34,17 @@ namespace NotesOnlineService
                 cfg.CreateMap<Roles, RoleVM>();
                 cfg.CreateMap<RoleVM, Roles>();
 
-                cfg.CreateMap<VocabularyDictionarys, VocabularyVM>();
+                cfg.CreateMap<VocabularyVM, VocabularyDictionarys>()
+                    .ForMember(x => x.Vocabulary, y => y.MapFrom(vm => vm.Word))
+                    .ForMember(x => x.Definition, y => y.MapFrom(vm => String.Join("|", vm.ChineseDefin)))
+                    .ForMember(x => x.Contents, y => y.MapFrom(vm => vm.FullHtml));
+
+
+                cfg.CreateMap<VocabularyDictionarys, VocabularyVM>()
+                    .ForMember(x => x.Word, y => y.MapFrom(vd => vd.Vocabulary))
+                    .ForMember(x => x.ChineseDefin, y => y.MapFrom(vd => vd.Definition.Split('|').ToList()))
+                    .ForMember(x => x.FullHtml, y => y.MapFrom(vd => vd.Contents));
+
                 cfg.CreateMap<Roles, RoleVM>();
 
             });

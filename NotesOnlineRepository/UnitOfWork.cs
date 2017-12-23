@@ -24,6 +24,7 @@ namespace NotesOnlineRepository
         private IRepository<Types> _typesRepository;
         private IRepository<Notes> _notesRepository;
         private IRepository<NoteDetails> _noteDetailsRepository;
+        private IRepository<VocabularyDictionarys> _vocabularyRepository;
 
         #region Repository資料
         public IRepository<Users> UsersRepository
@@ -92,7 +93,18 @@ namespace NotesOnlineRepository
                 return _noteDetailsRepository;
             }
         }
-       
+        public IRepository<VocabularyDictionarys> VocabularyDictionarysRepository
+        {
+            get
+            {
+                if (this._vocabularyRepository == null)
+                {
+                    this._vocabularyRepository = new GenericRepository<VocabularyDictionarys>(_context);
+                }
+                return _vocabularyRepository;
+            }
+        }
+
 
 
         #endregion

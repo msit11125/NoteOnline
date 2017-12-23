@@ -46,10 +46,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Code\EnCryptExtension.cs" />
+    <Compile Include="IVocabularyService.cs" />
     <Compile Include="Profile\MappingProfile.cs" />
     <Compile Include="IUserService.cs" />
     <Compile Include="UserService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="VocabularyService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NoteOnlineCore\NoteOnlineCore.csproj">

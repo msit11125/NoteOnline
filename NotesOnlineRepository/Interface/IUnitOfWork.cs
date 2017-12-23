@@ -18,6 +18,8 @@ namespace NotesOnlineRepository
         IRepository<Types> TypesRepository { get; }
         IRepository<Notes> NotesRepository { get; }
         IRepository<NoteDetails> NoteDetailsRepository { get; }
+        IRepository<VocabularyDictionarys> VocabularyDictionarysRepository { get; }
+
 
         /// <summary>
         /// 儲存所有異動。

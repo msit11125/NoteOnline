@@ -72,8 +72,6 @@ export class AuthenticationService {
     //檢查登入狀態 false:尚未登入 true:已登入
     checkCredentials() {
         if (localStorage.getItem("user") === null || localStorage.getItem("access_token") === null) {
-            alert("請先登入!");
-            this._router.navigateByUrl('/login');
             return false; 
         }
         return true;

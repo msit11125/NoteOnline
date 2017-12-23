@@ -2,8 +2,9 @@ import { Component, Pipe, PipeTransform } from '@angular/core';
 import { Router } from "@angular/router";
 import { VocabularyService, Vocabulary } from "../../services/vocabulary.service";
 
-import { DomSanitizer } from '@angular/platform-browser'
+import { DomSanitizer } from '@angular/platform-browser';
 import { AuthenticationService } from "../../services/authentication.service";
+import { ModalService } from '../../services/modal.service';
 
 @Component({
     selector: 'vocabulary',
@@ -24,7 +25,9 @@ export class VocabularyComponent {
 
     constructor(private _service: VocabularyService,
                 private _authservice: AuthenticationService,
-        ) {
+                private modalService: ModalService
+              )
+    {
         let historyArr = JSON.parse(localStorage.getItem("historyWords")); // 取出localStorage內的歷史搜尋的單字
         if (historyArr != null) {
             this.historyWords = historyArr;
@@ -101,7 +104,19 @@ export class VocabularyComponent {
             } else {
                 alert("無此單字!");
             }
+        } else {
+          this.openModal('custom-modal-1');
         }
+    }
+
+
+
+    // 開啟及關閉 Model
+    openModal(id: string) {
+      this.modalService.open(id);
+    }
+    closeModal(id: string) {
+      this.modalService.close(id);
     }
 }
 

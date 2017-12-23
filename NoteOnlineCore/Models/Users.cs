@@ -13,6 +13,7 @@ namespace NoteOnlineCore.Models
         {
             Notes = new HashSet<Notes>();
             Roles = new HashSet<Roles>();
+            VocabularyDictionarys = new HashSet<VocabularyDictionarys>();
         }
 
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -35,5 +36,8 @@ namespace NoteOnlineCore.Models
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Roles> Roles { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<VocabularyDictionarys> VocabularyDictionarys { get; set; }
     }
 }

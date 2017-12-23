@@ -34,10 +34,6 @@ namespace NotesOnlineRepository
                 .Map(m => m.ToTable("UsersRoles").MapLeftKey("RoleID").MapRightKey("GuestID"));
 
             modelBuilder.Entity<UserDetails>()
-                .Property(e => e.Password)
-                .IsFixedLength();
-
-            modelBuilder.Entity<UserDetails>()
                 .Property(e => e.PhoneNumber)
                 .IsUnicode(false);
 
@@ -49,6 +45,11 @@ namespace NotesOnlineRepository
             modelBuilder.Entity<Users>()
                 .HasOptional(e => e.UserDetails)
                 .WithRequired(e => e.Users);
+
+            modelBuilder.Entity<Users>()
+                .HasMany(e => e.VocabularyDictionarys)
+                .WithMany(e => e.Users)
+                .Map(m => m.ToTable("UsersVocabularys").MapLeftKey("GuestID").MapRightKey("VocabularySn"));
         }
     }
 }
