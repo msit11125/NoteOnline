@@ -37,13 +37,14 @@ namespace NotesOnlineService
                 cfg.CreateMap<VocabularyVM, VocabularyDictionarys>()
                     .ForMember(x => x.Vocabulary, y => y.MapFrom(vm => vm.Word))
                     .ForMember(x => x.Definition, y => y.MapFrom(vm => String.Join("|", vm.ChineseDefin)))
-                    .ForMember(x => x.Contents, y => y.MapFrom(vm => vm.FullHtml));
+                    .ForMember(x => x.Contents, y => y.MapFrom(vm => StringCompressorHelper.CompressString(vm.FullHtml) )); // Html格式字串壓縮
+
 
 
                 cfg.CreateMap<VocabularyDictionarys, VocabularyVM>()
                     .ForMember(x => x.Word, y => y.MapFrom(vd => vd.Vocabulary))
                     .ForMember(x => x.ChineseDefin, y => y.MapFrom(vd => vd.Definition.Split('|').ToList()))
-                    .ForMember(x => x.FullHtml, y => y.MapFrom(vd => vd.Contents));
+                    .ForMember(x => x.FullHtml, y => y.MapFrom(vd => StringCompressorHelper.DecompressString(vd.Contents) )); // Html格式字串解壓縮
 
                 cfg.CreateMap<Roles, RoleVM>();
 

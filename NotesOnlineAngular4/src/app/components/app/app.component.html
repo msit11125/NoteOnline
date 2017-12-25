@@ -8,13 +8,27 @@
 <foot></foot>
 
 
-<!--自訂客製化Modal-->
-<modal id="custom-modal-1">
+<!--自訂客製化Modal 1-->
+<modal id="custom-modal-loginError">
   <div class="mymodal">
     <div class="mymodal-body">
       <h1><i class="material-icons">info</i>提醒</h1>
       <p>
         您尚未登入，請先進行登入!
+      </p>
+      <button (click)="closeModal('custom-modal-1');">關閉</button>
+    </div>
+  </div>
+  <div class="mymodal-background"></div>
+</modal>
+
+<!--自訂客製化Modal 2-->
+<modal id="custom-modal-savesuccess">
+  <div class="mymodal">
+    <div class="mymodal-body">
+      <h1><i class="material-icons">info</i>訊息</h1>
+      <p>
+        儲存成功!
       </p>
       <button (click)="closeModal('custom-modal-1');">關閉</button>
     </div>

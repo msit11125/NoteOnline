@@ -39,6 +39,7 @@ export class VocabularyComponent {
     
     //搜尋單字
     btnSearch() {
+      this.hasAdd = false; // 改變圖示
         // 驗證不為空
       if (typeof this.word == 'undefined' || this.word =='') {
           console.log('查詢不可為空');
@@ -49,24 +50,19 @@ export class VocabularyComponent {
         this.chineseDefins;
 
 
-        
-        let vocabulary: Vocabulary = {
-            "word" : this.word
-        }
-
         // 翻譯
-        this._service.Translation(vocabulary).subscribe(
+        this._service.Translation(this.word).subscribe(
             data => {
                 // 回傳 html 結果
                 this.fullHtml = data.FullHtml;
                 this.chineseDefins = data.ChineseDefin; //中文顯示
                 // 加到歷史搜尋
-                if (!this.historyWords.includes(vocabulary.word)) { //判斷不重複
+                if (!this.historyWords.includes(this.word)) { //判斷不重複
                     // 歷史超過10筆 取出最左邊的單字 (注意array為初始化時候的判斷)
                     if (typeof this.historyWords !== 'undefined' && this.historyWords.length > 9) {
                         this.historyWords.shift(); // 取陣列最左
                     }
-                    this.historyWords.push(vocabulary.word); //加入新搜尋的單字
+                    this.historyWords.push(this.word); //加入新搜尋的單字
                 }
                 localStorage.setItem("historyWords", JSON.stringify(this.historyWords)); //儲存到localStorage
 
@@ -100,12 +96,36 @@ export class VocabularyComponent {
         if (this._authservice.checkCredentials()) {
             //有結果才加入
             if (this.chineseDefins) { 
-                this.hasAdd = !this.hasAdd;
+              this.hasAdd = !this.hasAdd; // 改變圖示
+
+              // 組合成單字物件
+              let vocabulary: Vocabulary = {
+                "word": this.word,
+                "fullHtml": this.fullHtml,
+                "chineseDefin": this.chineseDefins
+              };
+
+              this._service.SaveVocabulary(vocabulary).subscribe(
+                data => {
+                  // 回傳 html 結果
+                  var returnMsgNo = data.returnMsgNo;
+                  var returnMsg = data.returnMsg;
+                  if (returnMsgNo == 1)
+                    this.openModal('custom-modal-savesuccess');
+                  else
+                    alert(returnMsg);
+                },
+                failed => {
+                  //獲取錯誤
+                  console.log(failed.json());
+                  alert("儲存單字時發生錯誤");
+                }
+              );
             } else {
                 alert("無此單字!");
             }
         } else {
-          this.openModal('custom-modal-1');
+          this.openModal('custom-modal-loginError');
         }
     }
 

@@ -21,10 +21,10 @@ namespace NoteOnlineCore.Models
         [StringLength(30)]
         public string Vocabulary { get; set; }
 
-        [StringLength(150)]
+        [StringLength(800)]
         public string Definition { get; set; }
 
-        [StringLength(500)]
+        [StringLength(2000)]
         public string Contents { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

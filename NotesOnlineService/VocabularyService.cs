@@ -41,12 +41,12 @@ namespace NotesOnlineService
                 {
                     vocabularyModel = vocabularyOld; // 取代為字典庫內的
                 }
-
                 // 增加用戶儲存的單字
                 _unitOfWork.UsersRepository
-                    .Get(filter: u => u.GuestID == guestID)
+                    .Get(filter: u => u.GuestID == guestID,includeProperties: "VocabularyDictionarys")
                     .FirstOrDefault()
-                    .VocabularyDictionarys.Add(vocabularyModel);
+                    .VocabularyDictionarys
+                    .Add(vocabularyModel);
 
 
                 _unitOfWork.SaveChanges();
@@ -55,12 +55,11 @@ namespace NotesOnlineService
             {
                 saveReturn.returnMsgNo = -1;
                 saveReturn.returnMsg = "儲存單字時發生例外錯誤。";
+                return saveReturn;
             }
-
 
             saveReturn.returnMsgNo = 1;
             saveReturn.returnMsg = "單字儲存成功!";
-
             return saveReturn;
 
         }
