@@ -4,7 +4,7 @@ import { Http, Headers, RequestOptions, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 
 import 'rxjs/add/operator/map';
-import { ConstantValues } from "../constant-values";
+import { environment } from "../../environments/environment";
 
 export class Vocabulary {
   public word: string;
@@ -22,7 +22,7 @@ export class VocabularyService {
     //翻譯
     Translation(word: string) {
         
-        return this.http.get( ConstantValues.apiUrl +"/api/vocabularyapi?word=" + word)
+      return this.http.get(environment.apiServer +"/api/vocabularyapi?word=" + word)
             .map(res => res.json());
     }
 
@@ -35,7 +35,7 @@ export class VocabularyService {
         }
       );
 
-      return this.http.post(ConstantValues.apiUrl + "/api/vocabularyapi", JSON.stringify(vocabulary), { headers: headers })
+      return this.http.post(environment.apiServer + "/api/vocabularyapi", JSON.stringify(vocabulary), { headers: headers })
         .map(res => res.json());
 
     }

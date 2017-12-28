@@ -4,18 +4,21 @@
         <a id="logo-container" [routerLink]="['/home']" class="brand-logo">NoteO筆記</a>
         <span class="pull-right">{{userName}}</span>
         <ul class="right hide-on-med-and-down">
-            <li><a [routerLink]="['/vocabulary']">Vocabulary 詞彙</a></li>
-            <li><a [routerLink]="['/home']">Home 首頁</a></li>
-            <li *ngIf="!canLogOut"><a [routerLink]="['/login']" >Login 登入</a></li>
+            <li><a [routerLink]="['/vocabulary']">單字翻譯 Translate</a></li>
+            <li><a [routerLink]="['/favorite']">我的單字庫 Favorite</a></li>
+            <li><a [routerLink]="['/home']">首頁 Home</a></li>
+            <li *ngIf="!canLogOut"><a [routerLink]="['/login']" >登入</a></li>
             <li *ngIf="canLogOut"><a [routerLink]="" (click)="logOut()">登出</a></li>
 
         </ul>
 
         <ul id="nav-mobile" class="side-nav">
             <li *ngIf="canLogOut"><a [routerLink]="" (click)="logOut()">登出</a></li>
-            <li *ngIf="!canLogOut"><a [routerLink]="['/login']" class="loginLink">Login 登入</a></li>
-            <li><a [routerLink]="['/home']">Home 首頁</a></li>
-            <li><a [routerLink]="['/vocabulary']">Vocabulary 詞彙</a></li>
+            <li *ngIf="!canLogOut"><a [routerLink]="['/login']" class="loginLink">登入</a></li>
+            <li><a [routerLink]="['/home']">首頁 Home</a></li>
+            <li><a [routerLink]="['/favorite']">我的單字庫 Favorite</a></li>
+            <li><a [routerLink]="['/vocabulary']">單字翻譯 Translate</a></li>
+
         </ul>
         <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
     </div>

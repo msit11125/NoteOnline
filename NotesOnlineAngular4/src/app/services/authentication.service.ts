@@ -5,7 +5,7 @@ import { Observable } from 'rxjs/Observable';
 
 
 import 'rxjs/add/operator/map';
-import { ConstantValues } from "../constant-values";
+import { environment } from "../../environments/environment";
 
 export class User {
     constructor(
@@ -51,7 +51,7 @@ export class AuthenticationService {
 
         let options = new RequestOptions({ headers: headers });
 
-        return this.http.post( ConstantValues.apiUrl +'/api/security/token', body, options)
+        return this.http.post(environment.apiServer +'/api/security/token', body, options)
             .map(res => res.json());
        
     }
@@ -60,12 +60,12 @@ export class AuthenticationService {
     register(userData: UserRegisterModel) {
         let headers = new Headers(
             {
-                'Authorization': 'Bearer ' +localStorage.getItem('access_token'),
+                'Authorization': 'Bearer ' + localStorage.getItem('access_token'),
                 'Content-Type': 'application/json'
             }
         );
 
-        return this.http.post( ConstantValues.apiUrl +"/api/userapi/userregister", JSON.stringify(userData), { headers: headers })
+        return this.http.post(environment.apiServer +"/api/userapi/userregister", JSON.stringify(userData), { headers: headers })
             .map(res => res.json());
     }
 

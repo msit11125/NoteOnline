@@ -1,5 +1,4 @@
-﻿using HtmlAgilityPack;
-using NoteOnlineCore.ViewModels;
+﻿using NoteOnlineCore.ViewModels;
 using NotesOnlineService;
 using System;
 using System.Collections.Generic;
@@ -9,6 +8,7 @@ using System.Net.Http;
 using System.Security.Claims;
 using System.Text.RegularExpressions;
 using System.Threading;
+using System.Web;
 using System.Web.Http;
 
 namespace NotesOnlineWebApi.Controllers
@@ -40,67 +40,16 @@ namespace NotesOnlineWebApi.Controllers
         [AllowAnonymous]
         public IHttpActionResult SearchWord(string word)
         {
-            //回傳Model
-            VocabularyVM searchRE = new VocabularyVM();
+            // 根目錄網址 + 回傳本Api的Url
+            var thisUrl = HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority) 
+                + HttpContext.Current.Request.ApplicationPath
+                + "api/VocabularyApi?word=" ;
 
-            string searchUrl = "https://tw.voicetube.com/definition/" + word;
+            BaseReturn baseRE = new BaseReturn();
+            var searchRE = _vocabularyService.SearchVocabulary(word, out baseRE, new SearchWordStrategy_VoiceTube(thisUrl));
 
-            // From Web
-            var url = searchUrl;
-            var web = new HtmlWeb();
-            var doc = web.Load(url);
-
-
-            var definSingleNode = doc.DocumentNode.SelectSingleNode("//div[@id='definition']");
-
-            if (definSingleNode == null)
-            {
-                return BadRequest("沒有找到相關的單字");
-            }
-
-
-
-            //取得跟目錄網址 例如:http://localhost:59674
-            var baseUrl = Request.RequestUri.GetLeftPart(UriPartial.Authority);
-            foreach (var node in definSingleNode.Descendants())
-            {
-                if (node.Name == "a")
-                {
-                    node.Attributes["href"].Value = baseUrl + "/api/VocabularyApi?word=" + node.InnerText;
-                }
-            }
-
-            // 找到解釋
-            List<string> defins = new List<string>();
-            var filterHtml = definSingleNode.InnerHtml
-                .Replace("<h3>解釋</h3>", "<h3>")
-                .Replace("<h3>例句</h3>", "</h3>")
-                .Replace("<br>", "")
-                .Replace("\n", "|");
-
-            string pattern = "<h3>(.*?)</h3>";
-            MatchCollection matches = Regex.Matches(filterHtml, pattern);
-            Console.WriteLine("Matches found: {0}", matches.Count);
-
-            if (matches.Count > 0)
-                foreach (Match m in matches)
-                {
-                    // 分割每個解釋
-                    defins = m.Groups[1].ToString().Split('|').Select(w => w).ToList();
-                    // 空白移除
-                    defins.Remove("");
-                }
-
-
-            // 加入標題
-            HtmlNode titleNode = HtmlNode.CreateNode($"<h2>{word}</h2>");
-            definSingleNode.PrependChild(titleNode);
-            string html = definSingleNode.InnerHtml.Replace("\n", ""); // html格式 不需要換行
-
-            // 加到回傳Json內
-            searchRE.Word = word;
-            searchRE.ChineseDefin = defins;
-            searchRE.FullHtml = html;
+            if(baseRE.returnMsgNo != 1)
+                return BadRequest(baseRE.returnMsg);
 
             return Ok(searchRE);
         }

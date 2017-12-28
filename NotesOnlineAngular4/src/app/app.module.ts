@@ -13,7 +13,8 @@ import { FooterComponent } from './components/footer/footer.component';
 import { RegisterComponent } from "./components/register/register.component";
 import { ControlMessagesComponent } from "./components/register/control-messages.component";
 import { VocabularyComponent, SafeHtmlPipe } from "./components/vocabulary/vocabulary.component";
-import { ModalComponent } from './directives/modal.component';
+import { ModalComponent } from './directives/modal.component'; // 自訂彈出Modal
+import { FavoriteComponent } from './components/favorite/favorite.component';
 
 
 import { AuthenticationService } from './services/authentication.service'; // Service 登入服務
@@ -38,6 +39,7 @@ import { LoadingModule, ANIMATION_TYPES } from 'ngx-loading'; /* 與 materialize
       { path: 'home', component: HomeComponent },
       { path: 'register', component: RegisterComponent },
       { path: 'vocabulary', component: VocabularyComponent },
+      { path: 'favorite', component: FavoriteComponent },
       { path: '**', redirectTo: 'home' },
 
     ]),
@@ -59,9 +61,10 @@ import { LoadingModule, ANIMATION_TYPES } from 'ngx-loading'; /* 與 materialize
     LoginComponent,
     RegisterComponent,
     ControlMessagesComponent,
-    VocabularyComponent,
+    VocabularyComponent, 
     SafeHtmlPipe, //自訂Html的管道
     ModalComponent, // 自製Modal
+    FavoriteComponent,
   ],
   bootstrap: [AppComponent],
   providers: [

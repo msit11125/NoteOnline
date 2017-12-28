@@ -52,7 +52,6 @@
     <TypeScriptCompile Include="src\app\components\register\control-messages.component.ts" />
     <TypeScriptCompile Include="src\app\components\register\register.component.ts" />
     <TypeScriptCompile Include="src\app\components\vocabulary\vocabulary.component.ts" />
-    <TypeScriptCompile Include="src\app\constant-values.ts" />
     <TypeScriptCompile Include="src\app\services\authentication.service.ts" />
     <TypeScriptCompile Include="src\app\services\shared-service.ts" />
     <TypeScriptCompile Include="src\app\services\validation.service.ts" />

@@ -46,3 +46,19 @@
 <ng-template #addedFavorite>
     <i class="material-icons left">favorite_border</i>
 </ng-template>
+
+
+
+<!--自訂客製化Modal-->
+<modal id="custom-modal-savesuccess">
+  <div class="mymodal">
+    <div class="mymodal-body">
+      <h1><i class="material-icons">info</i>訊息</h1>
+      <p>
+        儲存成功!
+      </p>
+      <button (click)="closeModal('custom-modal-savesuccess');">關閉</button>
+    </div>
+  </div>
+  <div class="mymodal-background"></div>
+</modal>
