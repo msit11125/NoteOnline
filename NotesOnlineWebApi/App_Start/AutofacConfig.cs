@@ -12,6 +12,7 @@ using System.Linq;
 using System.Reflection;
 using System.Web;
 using System.Web.Http;
+using Microsoft.Owin.Security.Infrastructure;
 
 namespace NotesOnlineWebApi
 {
@@ -49,6 +50,11 @@ namespace NotesOnlineWebApi
                    .As<IOAuthAuthorizationServerProvider>()
                    .PropertiesAutowired() // to automatically resolve IUserService
                    .SingleInstance(); // you only need one instance of this provider
+
+
+            builder.RegisterType<ApplicationRefreshTokenProvider>()
+                    .As<IAuthenticationTokenProvider>()
+                    .SingleInstance(); // you only need one instance of this provider
 
             // Set the dependency resolver to be Autofac.
             var container = builder.Build();

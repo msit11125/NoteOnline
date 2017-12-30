@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <None Remove="src\app\constant.service.ts" />
+    <None Remove="src\app\models\BaseInfo.ts" />
   </ItemGroup>
 
   <ItemGroup>
@@ -52,6 +53,7 @@
     <TypeScriptCompile Include="src\app\components\register\control-messages.component.ts" />
     <TypeScriptCompile Include="src\app\components\register\register.component.ts" />
     <TypeScriptCompile Include="src\app\components\vocabulary\vocabulary.component.ts" />
+    <TypeScriptCompile Include="src\app\models\BaseInfo.ts" />
     <TypeScriptCompile Include="src\app\services\authentication.service.ts" />
     <TypeScriptCompile Include="src\app\services\shared-service.ts" />
     <TypeScriptCompile Include="src\app\services\validation.service.ts" />

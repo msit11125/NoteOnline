@@ -12,16 +12,15 @@ namespace NotesOnlineService
         /// <param name="baseUrl">Server網址</param>
         /// <param name="baseReturn">回傳結果</param>
         /// <param name="strategy">策略</param>
-        VocabularyVM SearchVocabulary(string word, out BaseReturn baseReturn, SearchWordStrategy strategy);
+        VocabularyInfo SearchVocabulary(string word, out BaseInfo baseReturn, SearchWordStrategy strategy);
         /// <summary>
         /// 儲存單字
         /// </summary>
-        BaseReturn SaveVocabulary(string guestID, VocabularyVM model);
+        BaseInfo SaveVocabulary(string guestID, VocabularyInfo model);
 
         /// <summary>
         /// 取得儲存過(加到最愛)的單字
         /// </summary>
-        List<VocabularyVM> GetUserFavoriteWords(string guestID, out BaseReturn baseReturn);
-
+        List<VocabularyInfo> GetUserFavoriteWords(string guestID, string searchWord, int currentPageNumber, int pageSize, string sortDirection, string sortExpression, out int totalRows, out BaseInfo baseReturn);
     }
 }

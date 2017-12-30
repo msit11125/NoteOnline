@@ -36,9 +36,11 @@ namespace NotesOnlineWebApi.Provider
         }
 
 
+        // (Startup中可設定Route)
         // 自訂驗證 ClaimsIdentity (驗證成功回傳Token)
         public override async Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)
         {
+            //允許CORS
             context.OwinContext.Response.Headers.Add("Access-Control-Allow-Origin", new[] { "*" });
             try
             {
@@ -47,7 +49,7 @@ namespace NotesOnlineWebApi.Provider
                 if (userVM.returnMsgNo == 1)
                 {
                     var identity = new ClaimsIdentity(context.Options.AuthenticationType);
-
+                    
                     identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, userVM.GuestID));
                     identity.AddClaim(new Claim(ClaimTypes.Name, userVM.Name));
                     identity.AddClaim(new Claim(ClaimTypes.Email, userVM.Email));
@@ -57,17 +59,15 @@ namespace NotesOnlineWebApi.Provider
 
                     if (userVM.RolesIDs != null)
                     {
-                        rolesNamesUser = userVM.RolesNames.ToList();
-
-                        foreach (var role in userVM.RolesNames)
-                            identity.AddClaim(new Claim(ClaimTypes.Role, role));
+                        rolesNamesUser = userVM.RolesNames?.ToList();
                     }
 
-                    var principal = new GenericPrincipal(identity, rolesNamesUser.ToArray());
+                    IPrincipal principal = new GenericPrincipal(identity, rolesNamesUser.ToArray());
                         
                     Thread.CurrentPrincipal = principal;
 
                     context.Validated(identity);
+
 
                 }
                 else
@@ -81,6 +81,15 @@ namespace NotesOnlineWebApi.Provider
             {
                 context.SetError("invalid_grant", ex.Message);
             }
+        }
+
+        //回傳Token
+        public override Task TokenEndpointResponse(OAuthTokenEndpointResponseContext context)
+        {
+            // TODO 更新DB Token...
+            string token = context.AccessToken;
+
+            return base.TokenEndpointResponse(context);
         }
     }
 }

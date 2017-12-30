@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Linq.Dynamic;
 
 namespace NotesOnlineService
 {
@@ -29,12 +30,12 @@ namespace NotesOnlineService
         /// <param name="baseReturn">回傳結果</param>
         /// <param name="strategy">策略</param>
         /// <returns></returns>
-        public VocabularyVM SearchVocabulary(string word, out BaseReturn baseReturn, SearchWordStrategy strategy)
+        public VocabularyInfo SearchVocabulary(string word, out BaseInfo baseReturn, SearchWordStrategy strategy)
         {
 
-            baseReturn = new BaseReturn();
+            baseReturn = new BaseInfo();
 
-            VocabularyVM searchRE = null;
+            VocabularyInfo searchRE = null;
             try
             {
                 searchRE = strategy.Search(word);
@@ -62,10 +63,10 @@ namespace NotesOnlineService
         /// <summary>
         /// 儲存單字
         /// </summary>
-        public BaseReturn SaveVocabulary(string guestID, VocabularyVM model)
+        public BaseInfo SaveVocabulary(string guestID, VocabularyInfo model)
         {
-            BaseReturn saveReturn = new BaseReturn();
-            var vocabularyModel = _mapper.Map<VocabularyVM, VocabularyDictionarys>(model);
+            BaseInfo saveReturn = new BaseInfo();
+            var vocabularyModel = _mapper.Map<VocabularyInfo, VocabularyDictionarys>(model);
             try
             {
 
@@ -115,31 +116,54 @@ namespace NotesOnlineService
         /// <summary>
         /// 取得儲存過(加到最愛)的單字
         /// </summary>
-        public List<VocabularyVM> GetUserFavoriteWords(string guestID,out BaseReturn baseReturn)
+        public List<VocabularyInfo> GetUserFavoriteWords(string guestID, string searchWord, int currentPageNumber, int pageSize,
+            string sortDirection, string sortExpression, out int totalRows, out BaseInfo baseReturn)
         {
-            baseReturn = new BaseReturn(); // 回傳訊息Model
+            baseReturn = new BaseInfo(); // 回傳訊息Model
 
-            List<VocabularyVM> vocabularyVMList = new List<VocabularyVM>();
+            List<VocabularyInfo> vocabularyVMList = null;
             try
             {
                 var vocabularyCollection = _unitOfWork.UsersRepository
                     .Get(filter: u => u.GuestID == guestID, includeProperties: "VocabularyDictionarys")
                     .FirstOrDefault()
-                    .VocabularyDictionarys;
+                    .VocabularyDictionarys
+                    .AsQueryable();
 
-                vocabularyVMList = _mapper
-                    .Map<IEnumerable<VocabularyDictionarys>, IEnumerable<VocabularyVM>>(vocabularyCollection)
+                // filters
+                if (sortExpression.Length == 0) sortExpression = "Vocabulary";
+                if (sortDirection.Length == 0) sortDirection = "ASC";
+                sortExpression = sortExpression + " " + sortDirection;
+
+                if (vocabularyCollection != null && searchWord.Trim().Length > 0)
+                {
+                    vocabularyCollection = vocabularyCollection.Where(c => c.Vocabulary.StartsWith(searchWord));
+                }
+                totalRows = vocabularyCollection.Count();
+
+                // Dynamic Linq 擴充
+                List<VocabularyDictionarys> collection = vocabularyCollection
+                    .OrderBy(sortExpression)
+                    .Skip((currentPageNumber - 1) * pageSize)
+                    .Take(pageSize)
                     .ToList();
 
+                vocabularyVMList = _mapper
+                    .Map<IEnumerable<VocabularyDictionarys>, IEnumerable<VocabularyInfo>>(collection)
+                    .ToList();
             }
             catch (Exception ex)
             {
                 baseReturn.returnMsgNo = -1;
                 baseReturn.returnMsg = "取得我的單字庫發生例外錯誤。";
-
+                totalRows = 0;
             }
-            baseReturn.returnMsgNo = 1;
-            baseReturn.returnMsg = "取得我的單字庫成功";
+
+            if (vocabularyVMList != null)
+            {
+                baseReturn.returnMsgNo = 1;
+                baseReturn.returnMsg = "取得我的單字庫成功";
+            }
 
             return vocabularyVMList;
         }

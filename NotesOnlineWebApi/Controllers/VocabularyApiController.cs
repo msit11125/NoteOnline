@@ -40,16 +40,11 @@ namespace NotesOnlineWebApi.Controllers
         [AllowAnonymous]
         public IHttpActionResult SearchWord(string word)
         {
-            // 根目錄網址 + 回傳本Api的Url
-            var thisUrl = HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority) 
-                + HttpContext.Current.Request.ApplicationPath
-                + "api/VocabularyApi?word=" ;
+            BaseInfo baseReturn = new BaseInfo();
+            var searchRE = _vocabularyService.SearchVocabulary(word, out baseReturn, new SearchWordStrategy_VoiceTube());
 
-            BaseReturn baseRE = new BaseReturn();
-            var searchRE = _vocabularyService.SearchVocabulary(word, out baseRE, new SearchWordStrategy_VoiceTube(thisUrl));
-
-            if(baseRE.returnMsgNo != 1)
-                return BadRequest(baseRE.returnMsg);
+            if (baseReturn.returnMsgNo != 1)
+                return BadRequest(baseReturn.returnMsg);
 
             return Ok(searchRE);
         }
@@ -59,7 +54,7 @@ namespace NotesOnlineWebApi.Controllers
         /// 把單字加到最愛
         /// </summary>
         [AcceptVerbs("POST")]
-        public IHttpActionResult AddToFavorite(VocabularyVM model)
+        public IHttpActionResult AddToFavorite(VocabularyInfo model)
         {
             //Get the current claims principal 取得資訊
             var identity = (ClaimsPrincipal)Thread.CurrentPrincipal;
@@ -69,7 +64,7 @@ namespace NotesOnlineWebApi.Controllers
                                .Select(c => c.Value).SingleOrDefault();
 
 
-            BaseReturn result =_vocabularyService.SaveVocabulary(guestID, model);
+            BaseInfo result = _vocabularyService.SaveVocabulary(guestID, model);
 
             return Ok(result);
         }
@@ -78,9 +73,9 @@ namespace NotesOnlineWebApi.Controllers
         /// <summary>
         /// 取得蒐藏的單字
         /// </summary>
-        [AcceptVerbs("GET")]
+        [AcceptVerbs("POST")]
         [Route("api/vocabularyapi/getfavorite")]
-        public IHttpActionResult GetFavorite()
+        public IHttpActionResult GetFavorite(VocabularyVM model)
         {
             //Get the current claims principal 取得資訊
             var identity = (ClaimsPrincipal)Thread.CurrentPrincipal;
@@ -89,16 +84,30 @@ namespace NotesOnlineWebApi.Controllers
             string guestID = identity.Claims.Where(c => c.Type == ClaimTypes.NameIdentifier)
                                .Select(c => c.Value).SingleOrDefault();
 
+            string searchWord = model.SearchWord;
+            int currentPageNumber = model.CurrentPageNumber;
+            int pageSize = model.PageSize;
+            string sortExpression = model.SortExpression;
+            string sortDirection = model.SortDirection;
+            int totalRows = 0;
+
+            BaseInfo baseReturn = new BaseInfo();
+
+            List<VocabularyInfo> vocabularyList = _vocabularyService.GetUserFavoriteWords(guestID, searchWord, currentPageNumber,
+                pageSize, sortExpression, sortDirection, out totalRows, out baseReturn);
+
+            model.returnMsgNo = baseReturn.returnMsgNo;
+            model.returnMsg = baseReturn.returnMsg;
+            model.TotalRows = totalRows;
+            model.TotalPages = Utilities.CalculateTotalPages(totalRows, pageSize);
+            model.VocabularyList = vocabularyList;
 
 
-            BaseReturn baseReturn = new BaseReturn();
-            var result = _vocabularyService.GetUserFavoriteWords(guestID,out baseReturn);
-            if(baseReturn.returnMsgNo != 1)
-            {
+
+            if (baseReturn.returnMsgNo != 1)
                 return BadRequest(baseReturn.returnMsg);
-            }
 
-            return Ok(result);
+            return Ok(model);
         }
 
     }

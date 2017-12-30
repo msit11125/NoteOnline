@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Http;
 using NotesOnlineWebApi.Provider;
 using Autofac;
+using Microsoft.Owin.Security.Infrastructure;
 
 [assembly: OwinStartup(typeof(NotesOnlineWebApi.Startup))]
 namespace NotesOnlineWebApi
@@ -32,8 +33,9 @@ namespace NotesOnlineWebApi
             {
                 AllowInsecureHttp = true,
                 TokenEndpointPath = new PathString("/api/security/token"),
-                AccessTokenExpireTimeSpan = TimeSpan.FromHours(2),
-                Provider = container.Resolve<IOAuthAuthorizationServerProvider>()
+                AccessTokenExpireTimeSpan = TimeSpan.FromHours(2), // 設定過期時間
+                Provider = container.Resolve<IOAuthAuthorizationServerProvider>(),
+                RefreshTokenProvider = container.Resolve<IAuthenticationTokenProvider>()
             };
 
             app.UseOAuthAuthorizationServer(oAuthServerOptions);

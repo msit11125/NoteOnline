@@ -3,8 +3,14 @@ import { Router } from '@angular/router';
 import { Http, Headers, RequestOptions, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 
-import 'rxjs/add/operator/map';
 import { environment } from "../../environments/environment";
+import { BaseInfo } from "../models/BaseInfo";
+
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/catch';
+import 'rxjs/add/observable/throw';
+
+import { AuthenticationService } from "./authentication.service";
 
 export class Vocabulary {
   public word: string;
@@ -12,22 +18,27 @@ export class Vocabulary {
   public chineseDefin: string[];
 }
 
+export class VocabularyVM extends BaseInfo {
+  public searchWord: string;
+  public vocabularyList: Vocabulary[];
+}
+
 
 @Injectable()
 export class VocabularyService {
 
-    constructor(
-        private _router: Router, private http: Http) { }
+  constructor(private _router: Router,
+              private http: Http) { }
 
     //翻譯
-    Translation(word: string) {
+    public Translation(word: string) {
         
       return this.http.get(environment.apiServer +"/api/vocabularyapi?word=" + word)
             .map(res => res.json());
     }
 
     //儲存單字
-    SaveVocabulary(vocabulary: Vocabulary) {
+    public SaveVocabulary(vocabulary: Vocabulary) {
       let headers = new Headers(
         {
           'Authorization': 'Bearer ' + localStorage.getItem('access_token'),
@@ -40,5 +51,19 @@ export class VocabularyService {
 
     }
 
-
+    //取得單字List
+    public GetVocabularyList(vocabularyVM: VocabularyVM) {
+      let headers = new Headers(
+        {
+          'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+        }
+      );
+      return this.http.post(environment.apiServer + "/api/vocabularyapi/getfavorite", vocabularyVM, { headers: headers })
+        .map(res => res.json())
+        .catch(e => {
+          if (e.status === 401) {
+            return Observable.throw('Unauthorized');
+          }
+        });
+    }
 }

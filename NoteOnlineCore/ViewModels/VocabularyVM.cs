@@ -8,7 +8,21 @@ using System.Threading.Tasks;
 namespace NoteOnlineCore.ViewModels
 {
 
-    public class VocabularyVM
+    public class VocabularyVM : BaseInfo
+    {
+        [StringLength(30, ErrorMessage = "Word 超過長度")]
+        public string SearchWord { get; set; }
+
+        public List<VocabularyInfo> VocabularyList { get; set; }
+
+        public VocabularyVM()
+        {
+            SearchWord = "";
+        }
+    }
+
+
+    public class VocabularyInfo: BaseInfo
     {
         [StringLength(30, ErrorMessage = "Word 超過長度")]
         public string Word { get; set; }

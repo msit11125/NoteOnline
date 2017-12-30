@@ -19,7 +19,7 @@ namespace NotesOnlineWebApi.Controllers
             this.userService = userService;
         }
 
-        public IHttpActionResult FindUser(LoginModel input)
+        public IHttpActionResult FindUser(LoginVM input)
         {
             var loginRE = userService.FindUser(input.Account, input.Password);
             return Ok(loginRE);

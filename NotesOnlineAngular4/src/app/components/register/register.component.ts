@@ -1,4 +1,4 @@
-﻿import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from "@angular/router";
 
@@ -80,7 +80,6 @@ export class RegisterComponent {
         console.log(postData);
 
         if (this.userForm.dirty && this.userForm.valid) {
-
 
             this.loading = true;
 

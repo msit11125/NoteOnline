@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace NoteOnlineCore.ViewModels
 {
-    public class UserVM : BaseReturn
+    public class UserVM : BaseInfo
     {
         public string GuestID { get; set; }
 

@@ -34,6 +34,8 @@ namespace NotesOnlineService
             Buffer.BlockCopy(compressedData, 0, gZipBuffer, 4, compressedData.Length);
             Buffer.BlockCopy(BitConverter.GetBytes(buffer.Length), 0, gZipBuffer, 0, 4);
             return Convert.ToBase64String(gZipBuffer);
+
+
         }
 
         /// <summary>
@@ -43,22 +45,30 @@ namespace NotesOnlineService
         /// <returns></returns>
         public static string DecompressString(string compressedText)
         {
-            byte[] gZipBuffer = Convert.FromBase64String(compressedText);
-            using (var memoryStream = new MemoryStream())
+            try
             {
-                int dataLength = BitConverter.ToInt32(gZipBuffer, 0);
-                memoryStream.Write(gZipBuffer, 4, gZipBuffer.Length - 4);
-
-                var buffer = new byte[dataLength];
-
-                memoryStream.Position = 0;
-                using (var gZipStream = new GZipStream(memoryStream, CompressionMode.Decompress))
+                byte[] gZipBuffer = Convert.FromBase64String(compressedText);
+                using (var memoryStream = new MemoryStream())
                 {
-                    gZipStream.Read(buffer, 0, buffer.Length);
-                }
+                    int dataLength = BitConverter.ToInt32(gZipBuffer, 0);
+                    memoryStream.Write(gZipBuffer, 4, gZipBuffer.Length - 4);
 
-                return Encoding.UTF8.GetString(buffer);
+                    var buffer = new byte[dataLength];
+
+                    memoryStream.Position = 0;
+                    using (var gZipStream = new GZipStream(memoryStream, CompressionMode.Decompress))
+                    {
+                        gZipStream.Read(buffer, 0, buffer.Length);
+                    }
+
+                    return Encoding.UTF8.GetString(buffer);
+                }
             }
+            catch (Exception)
+            {
+                return "解碼失敗";
+            }
+
         }
     }
 }
