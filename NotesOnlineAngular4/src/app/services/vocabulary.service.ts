@@ -13,14 +13,14 @@ import 'rxjs/add/observable/throw';
 import { AuthenticationService } from "./authentication.service";
 
 export class Vocabulary {
-  public word: string;
-  public fullHtml: string;
-  public chineseDefin: string[];
+  public Word: string;
+  public FullHtml: string;
+  public ChineseDefin: string[];
 }
 
 export class VocabularyVM extends BaseInfo {
-  public searchWord: string;
-  public vocabularyList: Vocabulary[];
+  public SearchWord: string;
+  public VocabularyList: Vocabulary[];
 }
 
 
@@ -47,7 +47,12 @@ export class VocabularyService {
       );
 
       return this.http.post(environment.apiServer + "/api/vocabularyapi", JSON.stringify(vocabulary), { headers: headers })
-        .map(res => res.json());
+        .map(res => res.json())
+        .catch(e => {
+          if (e.status === 401) {
+            return Observable.throw('Unauthorized');
+          }
+        });
 
     }
 

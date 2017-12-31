@@ -11,7 +11,7 @@ import { Router } from "@angular/router";
 })
 export class FavoriteComponent implements OnInit {
 
-  private searchWord: string;
+  private searchWord: string; // 欲搜尋的單字
   private totalRows: number;
   private currentPageNumber: number = 1;
   private totalPages: number;
@@ -23,6 +23,7 @@ export class FavoriteComponent implements OnInit {
 
   private imgPath: string = "./assets/images/DoubleRing.gif"; // 取得圖片相對路徑
   private searching: boolean = true; // 搜尋中
+  private FullHtml: string = ""; // 單字詳細內容
 
   constructor
       (private vocabularyService: VocabularyService,
@@ -45,7 +46,7 @@ export class FavoriteComponent implements OnInit {
   }
 
   //更換頁面
-  private BtnChangePage(currentPage: number) {
+  public BtnChangePage(currentPage: number) {
     this.currentPageNumber = currentPage;
     this.GetPageConditions();
   }
@@ -53,16 +54,16 @@ export class FavoriteComponent implements OnInit {
 
 
   // 取得頁面查詢後DATA
-  private GetPageConditions()
+  public GetPageConditions()
   {
     this.searching = true;
     //取得頁面查詢資訊 (POST前置動作)
     let vocabularyVM = new VocabularyVM();
-    vocabularyVM.searchWord = this.searchWord;
-    vocabularyVM.pageSize = this.pageSize;
-    vocabularyVM.sortDirection = this.sortDirection;
-    vocabularyVM.sortExpression = this.sortExpression;
-    vocabularyVM.currentPageNumber = this.currentPageNumber;
+    vocabularyVM.SearchWord = this.searchWord;
+    vocabularyVM.PageSize = this.pageSize;
+    vocabularyVM.SortDirection = this.sortDirection;
+    vocabularyVM.SortExpression = this.sortExpression;
+    vocabularyVM.CurrentPageNumber = this.currentPageNumber;
 
     // 查詢user的單字列表
     this.vocabularyService.GetVocabularyList(vocabularyVM).subscribe(
@@ -76,7 +77,6 @@ export class FavoriteComponent implements OnInit {
         for (var i = 1; i <= this.totalPages; i++) {
           this.pageArr.push(i);
         }
-        console.log(this.vocabularyList);
       },
       failed => {
         //獲取錯誤
@@ -99,7 +99,6 @@ export class FavoriteComponent implements OnInit {
         }
         else {
           alert("查詢單字列表發生錯誤");
-
         }
       },
       () => {
@@ -108,9 +107,32 @@ export class FavoriteComponent implements OnInit {
     );
   }
 
-  // 開啟 Model
-  openModal(id: string) {
-    this.modalService.open(id);
+
+
+
+  // 按下詳細
+  public MoreDetail(word: string) {
+    // 找到單字的全文
+    console.log(word);
+    this.FullHtml = this.vocabularyList.find(v => v.Word == word).FullHtml;
+
+    this.openModal("custom-modal-detail");
   }
 
+  // 按下搜尋
+  public FilterWord() {
+    
+    if (this.searchWord !== undefined) {
+      this.GetPageConditions();
+      console.log(this.searchWord + " search done.");
+    }
+  }
+
+  // 開啟/關閉 Model
+  public openModal(id: string) {
+    this.modalService.open(id);
+  }
+  public closeModal(id: string) {
+    this.modalService.close(id);
+  }
 }

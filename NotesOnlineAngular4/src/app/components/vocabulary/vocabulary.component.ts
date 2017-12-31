@@ -21,7 +21,7 @@ export class VocabularyComponent {
   imgPath: string = "./assets/images/DoubleRing.gif" ; // 取得圖片相對路徑
   searching: boolean = false; // 搜尋中
   hasAdd: boolean = false; // 已加到最愛
-
+  saveStatusText: string = "儲存成功!"; //儲存狀態
 
   constructor(private _service: VocabularyService,
     private _authservice: AuthenticationService,
@@ -65,14 +65,14 @@ export class VocabularyComponent {
         }
         localStorage.setItem("historyWords", JSON.stringify(this.historyWords)); //儲存到localStorage
 
-        this.searching = false;
       },
       failed => {
         //獲取錯誤
         console.log(failed.json());
         this.fullHtml = "搜尋不到任何結果。";
-        this.searching = false;
-      }
+        
+      },
+      () => this.searching = false
     );
   }
 
@@ -100,9 +100,9 @@ export class VocabularyComponent {
     if (this.chineseDefins) {
       // 組合成單字物件
       let vocabulary: Vocabulary = {
-        "word": this.word,
-        "fullHtml": this.fullHtml,
-        "chineseDefin": this.chineseDefins
+        "Word": this.word,
+        "FullHtml": this.fullHtml,
+        "ChineseDefin": this.chineseDefins
       };
 
       this._service.SaveVocabulary(vocabulary).subscribe(
@@ -111,16 +111,35 @@ export class VocabularyComponent {
           var returnMsgNo = data.returnMsgNo;
           var returnMsg = data.returnMsg;
           if (returnMsgNo == 1) {
-            this.openModal('custom-modal-savesuccess'); // 這個在此vocabulary.component.html
             this.hasAdd = !this.hasAdd; // 改變圖示
+            this.saveStatusText = "儲存成功!";
           }
           else
-            alert(returnMsg);
+            this.saveStatusText = returnMsg;
+
+          this.openModal('custom-modal-savesuccess'); // 這個在此vocabulary.component.html
         },
         failed => {
           //獲取錯誤
           console.log(failed.json());
-          alert("儲存單字時發生錯誤");
+          // 是401錯誤就更新Token
+          if (failed === 'Unauthorized') {
+            this._authservice.refreshToken().subscribe(
+              data => {
+                if (data) {
+                  console.log("refresh token done.");
+                }
+              },
+              err => {
+                console.log(err);
+                //過久未登入 => 登出
+                this._authservice.logout();
+                window.location.reload();
+              });
+          }
+          else {
+            alert("儲存單字時發生錯誤");
+          }
         }
       );
     } else {

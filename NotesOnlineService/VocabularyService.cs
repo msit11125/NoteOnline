@@ -77,7 +77,7 @@ namespace NotesOnlineService
                     .FirstOrDefault()
                     .VocabularyDictionarys;
 
-                if (vocabularyCollect.Any(v => v.Vocabulary == model.Word)) // 檢查是否已儲存過
+                if (vocabularyCollect.Any(v => v.Vocabulary.ToLower() == model.Word.ToLower())) // 檢查是否已儲存過
                 {
                     saveReturn.returnMsgNo = -2;
                     saveReturn.returnMsg = "單字已儲存過。";
