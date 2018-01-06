@@ -56,7 +56,6 @@ export class LoginComponent {
 
           this._router.navigate(['/home']);
         }
-        this.loading = false;
 
       },
       failed => {
@@ -64,8 +63,9 @@ export class LoginComponent {
         console.log(failed.json());
         this.errorMsg = failed.json().error_description;
 
-        this.loading = false;
-      }
+        
+      },
+      () => this.loading = false
     );
 
 

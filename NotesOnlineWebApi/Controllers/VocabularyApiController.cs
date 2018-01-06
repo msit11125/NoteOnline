@@ -56,12 +56,8 @@ namespace NotesOnlineWebApi.Controllers
         [AcceptVerbs("POST")]
         public IHttpActionResult AddToFavorite(VocabularyInfo model)
         {
-            //Get the current claims principal 取得資訊
-            var identity = (ClaimsPrincipal)Thread.CurrentPrincipal;
-
-            // Get the claims values 取得ID
-            string guestID = identity.Claims.Where(c => c.Type == ClaimTypes.NameIdentifier)
-                               .Select(c => c.Value).SingleOrDefault();
+            // 取得用戶資料
+            string guestID = UserInformationHelper.GetUserGuestID();
 
 
             BaseInfo result = _vocabularyService.SaveVocabulary(guestID, model);
@@ -77,12 +73,8 @@ namespace NotesOnlineWebApi.Controllers
         [Route("api/vocabularyapi/getfavorite")]
         public IHttpActionResult GetFavorite(VocabularyVM model)
         {
-            //Get the current claims principal 取得資訊
-            var identity = (ClaimsPrincipal)Thread.CurrentPrincipal;
-
-            // Get the claims values 取得ID
-            string guestID = identity.Claims.Where(c => c.Type == ClaimTypes.NameIdentifier)
-                               .Select(c => c.Value).SingleOrDefault();
+            // 取得用戶資料
+            string guestID = UserInformationHelper.GetUserGuestID();
 
             string searchWord = model.SearchWord;
             int currentPageNumber = model.CurrentPageNumber;
@@ -108,6 +100,32 @@ namespace NotesOnlineWebApi.Controllers
                 return BadRequest(baseReturn.returnMsg);
 
             return Ok(model);
+        }
+
+
+        [AcceptVerbs("Delete")]
+        [Route("api/vocabularyapi/{wordSn}")]
+        public IHttpActionResult RemoveFavorite(int wordSn)
+        {
+            if (wordSn == 0)
+                return BadRequest("移除的單字Sn不可為0");
+
+            // 取得用戶資料
+            string guestID = UserInformationHelper.GetUserGuestID();
+
+            BaseInfo baseReturn = new BaseInfo();
+
+            _vocabularyService.RemoveFavorite(guestID, wordSn, out baseReturn);
+
+            if (baseReturn.returnMsgNo != 1)
+                return BadRequest(baseReturn.returnMsg);
+
+            return Ok(
+                new
+                {
+                    returnMsgNo = 1,
+                    returnMsg = baseReturn.returnMsg
+                });
         }
 
     }

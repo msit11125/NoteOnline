@@ -15,6 +15,8 @@ import { ControlMessagesComponent } from "./components/register/control-messages
 import { VocabularyComponent, SafeHtmlPipe } from "./components/vocabulary/vocabulary.component";
 import { ModalComponent } from './directives/modal.component'; // 自訂彈出Modal
 import { FavoriteComponent } from './components/favorite/favorite.component';
+import { NotesComponent } from "./components/notes/notes.component";
+import { NotesCreateComponent } from "./components/notes/notes-create.component";
 
 
 import { AuthenticationService } from './services/authentication.service'; // Service 登入服務
@@ -40,6 +42,8 @@ import { LoadingModule, ANIMATION_TYPES } from 'ngx-loading'; /* 與 materialize
       { path: 'register', component: RegisterComponent },
       { path: 'vocabulary', component: VocabularyComponent },
       { path: 'favorite', component: FavoriteComponent },
+      { path: 'notes', component: NotesComponent },
+      { path: 'notes-create', component: NotesCreateComponent},
       { path: '**', redirectTo: 'home' },
 
     ]),
@@ -65,6 +69,8 @@ import { LoadingModule, ANIMATION_TYPES } from 'ngx-loading'; /* 與 materialize
     SafeHtmlPipe, //自訂Html的管道
     ModalComponent, // 自製Modal
     FavoriteComponent,
+    NotesComponent,
+    NotesCreateComponent,
   ],
   bootstrap: [AppComponent],
   providers: [

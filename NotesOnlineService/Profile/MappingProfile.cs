@@ -42,6 +42,7 @@ namespace NotesOnlineService
 
 
                 cfg.CreateMap<VocabularyDictionarys, VocabularyInfo>()
+                    .ForMember(x=>x.WordSn, y => y.MapFrom(vd=>vd.Sn))
                     .ForMember(x => x.Word, y => y.MapFrom(vd => vd.Vocabulary))
                     .ForMember(x => x.ChineseDefin, y => y.MapFrom(vd => vd.Definition.Split('|').ToList()))
                     .ForMember(x => x.FullHtml, y => y.MapFrom(vd => StringCompressorHelper.DecompressString(vd.Contents) )); // Html格式字串解壓縮

@@ -20,6 +20,10 @@
     <Content Include="src\app\components\login\login.component.html" />
     <Content Include="src\app\components\navmenu\navmenu.component.css" />
     <Content Include="src\app\components\navmenu\navmenu.component.html" />
+    <Content Include="src\app\components\notes\notes.component.css" />
+    <Content Include="src\app\components\notes\notes.component.html" />
+    <Content Include="src\app\components\notes\notes-create.component.css" />
+    <Content Include="src\app\components\notes\notes-create.component.html" />
     <Content Include="src\app\components\register\register.component.css" />
     <Content Include="src\app\components\register\register.component.html" />
     <Content Include="src\app\components\vocabulary\vocabulary.component.css" />
@@ -50,6 +54,8 @@
     <TypeScriptCompile Include="src\app\components\home\home.component.ts" />
     <TypeScriptCompile Include="src\app\components\login\login.component.ts" />
     <TypeScriptCompile Include="src\app\components\navmenu\navmenu.component.ts" />
+    <TypeScriptCompile Include="src\app\components\notes\notes.component.ts" />
+    <TypeScriptCompile Include="src\app\components\notes\notes-create.component.ts" />
     <TypeScriptCompile Include="src\app\components\register\control-messages.component.ts" />
     <TypeScriptCompile Include="src\app\components\register\register.component.ts" />
     <TypeScriptCompile Include="src\app\components\vocabulary\vocabulary.component.ts" />

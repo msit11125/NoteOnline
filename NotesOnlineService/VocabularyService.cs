@@ -157,15 +157,50 @@ namespace NotesOnlineService
                 baseReturn.returnMsgNo = -1;
                 baseReturn.returnMsg = "取得我的單字庫發生例外錯誤。";
                 totalRows = 0;
+                return null;
             }
 
-            if (vocabularyVMList != null)
-            {
-                baseReturn.returnMsgNo = 1;
-                baseReturn.returnMsg = "取得我的單字庫成功";
-            }
+            baseReturn.returnMsgNo = 1;
+            baseReturn.returnMsg = "取得我的單字庫成功!";
 
             return vocabularyVMList;
+        }
+
+
+        /// <summary>
+        /// 移除單字
+        /// </summary>
+        /// <param name="wordSn">單字Sn</param>
+        /// <returns></returns>
+        public void RemoveFavorite(string guestID, int wordSn, out BaseInfo baseReturn)
+        {
+            baseReturn = new BaseInfo();
+            try
+            {
+                // 1. Find VocabularyDictionary
+                var vocabulary = _unitOfWork.VocabularyDictionarysRepository.GetByID(wordSn);
+
+                // 2. Find User Collecions
+                var vocabularyCollection = _unitOfWork.UsersRepository
+                    .Get(filter: u => u.GuestID == guestID, includeProperties: "VocabularyDictionarys")
+                    .FirstOrDefault()
+                    .VocabularyDictionarys;
+
+                // 3. Remove it From User Collecions
+                vocabularyCollection.Remove(vocabulary);
+
+                _unitOfWork.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                baseReturn.returnMsgNo = -1;
+                baseReturn.returnMsg = "刪除單字時發生例外。";
+                return;
+            }
+
+            baseReturn.returnMsgNo = 1;
+            baseReturn.returnMsg = "刪除單字成功!";
+
         }
     }
 }

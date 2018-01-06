@@ -38,7 +38,7 @@
                 <tr *ngFor="let vocabulary of vocabularyList">
                   <td align="center">
                     <a class="btn btn-primary" (click)="MoreDetail(vocabulary.Word)" ><i class="material-icons">more</i></a>
-                    <a class="btn btn-danger" (click)="openModal('custom-modal-delete')" ><em class="fa fa-trash"></em></a>
+                    <a class="btn btn-danger" (click)="openModal('custom-modal-delete');RemoveWord('set',vocabulary.WordSn,vocabulary.Word)" ><em class="fa fa-trash"></em></a>
                   </td>
                   <td>{{vocabulary.Word}}</td>
                   <td>
@@ -58,15 +58,14 @@
                 <b>Page {{currentPageNumber}} of {{totalPages}}</b>
               </div>
               <div class="col col-xs-8">
-                <ul class="pagination hidden-xs pull-right">
+                <ul class="pagination pull-right">
+                  <li><a href="javascript:void(0)" (click)="BtnPageControl('pre')">«</a></li>
                   <li *ngFor="let page of pageArr">
                     <a href="javascript:void(0)" (click)="BtnChangePage(page)"><b>{{page}}</b></a>
                   </li>
+                  <li><a href="javascript:void(0)" (click)="BtnPageControl('next')">»</a></li>
                 </ul>
-                <ul class="pagination visible-xs pull-right">
-                  <li><a href="javascript:void(0)">«</a></li>
-                  <li><a href="javascript:void(0)">»</a></li>
-                </ul>
+ 
               </div>
             </div>
           </div>
@@ -98,9 +97,9 @@
   <div class="mymodal">
     <div class="mymodal-body">
       <h3>
-        <i class="fa fa-exclamation-triangle"></i>&nbsp;確定要刪除嗎?
+        <i class="fa fa-exclamation-triangle"></i>&nbsp;確定要刪除{{rmWord}}嗎?
       </h3>
-      <button class="btn btn-danger" (click)="closeModal('custom-modal-delete');">刪除</button>
+      <button class="btn btn-danger" (click)="RemoveWord('remove')">刪除</button>
       <button class="btn btn-warning" (click)="closeModal('custom-modal-delete');">返回</button>
     </div>
   </div>

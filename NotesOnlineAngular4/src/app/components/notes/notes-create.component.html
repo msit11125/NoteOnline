@@ -1,0 +1,54 @@
+<div style="background-color:#fff;padding:1% 10%; ">
+
+
+  <div id="step1" [hidden]="!(step == 1)">
+    <div class="row">
+      <h1 class="teal-text"><span class="label label-default">步驟1</span> 新增一個筆記</h1>
+      <p name="text">使用以下編輯器新增或修改文章。</p>
+      <textarea name="editor1"></textarea>
+    </div>
+
+    <div class="row">
+      <button class="btn-link" (click)="ExpandAndCollapse()">
+        <i class="material-icons">open_in_new</i> 展開/收合
+      </button>
+
+      <span name="text">預覽文章</span>
+
+      <div name="displayCK"
+           [hidden]="!expand"
+           style="padding:2%;border:1px solid #DDD">
+        可於上方開始輸入...
+      </div>
+    </div>
+    
+    <div class="row">
+      <a class="btn teal darken-3 pull-left" [routerLink]="['/notes']">
+        <i class="material-icons">format_list_bulleted</i>
+      回到列表
+      </a>
+
+      <button class="btn teal darken-1 pull-right" (click)="GoToStep(2)">
+        <i class="material-icons">navigate_next</i> 下一步
+      </button>
+    </div>
+  </div>
+
+
+  <div id="step2" [hidden]="!(step == 2)">
+    <div class="row" style="height:490px;">
+      <h1 class="teal-text"><span class="label label-default">步驟2</span> 選擇一個分類</h1>
+
+    </div>
+
+    <div class="row">
+      <button class="btn teal darken-1 pull-left" (click)="GoToStep(1)">
+        <i class="material-icons">navigate_before</i> 上一步
+      </button>
+      <button class="btn green darken-3 pull-right" (click)="GoToStep(3)">
+        <i class="material-icons">navigate_next</i> 發布文章
+      </button>
+    </div>
+  </div>
+</div>
+

@@ -13,7 +13,7 @@ import { ModalService } from '../../services/modal.service';
 
 })
 export class VocabularyComponent {
-
+  loading: boolean = false; // Spinner
   historyWords: string[]; // 以前的搜尋
   word: string;
   fullHtml: string = "<span>搜尋結果會顯示在這裡。</span>"; // Html翻譯全文
@@ -98,8 +98,10 @@ export class VocabularyComponent {
     }
     //有結果才加入
     if (this.chineseDefins) {
+      this.loading = true;
       // 組合成單字物件
       let vocabulary: Vocabulary = {
+        "WordSn": null,
         "Word": this.word,
         "FullHtml": this.fullHtml,
         "ChineseDefin": this.chineseDefins
@@ -121,13 +123,14 @@ export class VocabularyComponent {
         },
         failed => {
           //獲取錯誤
-          console.log(failed.json());
+          console.log(failed);
           // 是401錯誤就更新Token
           if (failed === 'Unauthorized') {
             this._authservice.refreshToken().subscribe(
               data => {
                 if (data) {
                   console.log("refresh token done.");
+                  this.addFavorite(); //重新再做一次
                 }
               },
               err => {
@@ -140,8 +143,10 @@ export class VocabularyComponent {
           else {
             alert("儲存單字時發生錯誤");
           }
-        }
+        },
+        () => this.loading = false
       );
+
     } else {
       alert("無此單字!");
     }

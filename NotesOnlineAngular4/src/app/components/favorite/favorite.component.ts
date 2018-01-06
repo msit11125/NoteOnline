@@ -22,7 +22,7 @@ export class FavoriteComponent implements OnInit {
   private vocabularyList: Vocabulary[];
 
   private imgPath: string = "./assets/images/DoubleRing.gif"; // 取得圖片相對路徑
-  private searching: boolean = true; // 搜尋中
+  private searching: boolean = true; // 搜尋中Spinner
   private FullHtml: string = ""; // 單字詳細內容
 
   constructor
@@ -50,7 +50,21 @@ export class FavoriteComponent implements OnInit {
     this.currentPageNumber = currentPage;
     this.GetPageConditions();
   }
-
+  //上下頁面
+  public BtnPageControl(mode: string) {
+    switch (mode) {
+      case "pre":
+        if (this.currentPageNumber > 1)
+          this.currentPageNumber -= 1;
+          this.GetPageConditions();
+        break;
+      case "next":
+        if (this.currentPageNumber < this.totalPages)
+          this.currentPageNumber += 1;
+          this.GetPageConditions();
+        break;
+    }
+  }
 
 
   // 取得頁面查詢後DATA
@@ -86,8 +100,8 @@ export class FavoriteComponent implements OnInit {
           this.authenticationService.refreshToken().subscribe(
             data => {
               if (data) {
-                this.GetPageConditions();
                 console.log("refresh token done.");
+                this.GetPageConditions(); //重新再做一次
               } 
             },
             err => {
@@ -125,6 +139,36 @@ export class FavoriteComponent implements OnInit {
     if (this.searchWord !== undefined) {
       this.GetPageConditions();
       console.log(this.searchWord + " search done.");
+    }
+  }
+
+  // 刪除單字方法
+  private rmWordSn: number = 0; // 準備移除的wordSn
+  private rmWord: string = ""; // 準備移除的word
+  public RemoveWord(mode: string, wordSn: number, word: string) {
+    switch (mode) {
+      case "set":
+        this.rmWordSn = wordSn;
+        this.rmWord = word;
+        break;
+      case "remove":
+        this.vocabularyService.RemoveVocabulary(this.rmWordSn).subscribe(
+          data => {
+            // 回傳結果
+            var returnMsgNo = data.returnMsgNo;
+            if (returnMsgNo != 1)
+              alert(data.returnMsg);
+            else
+              this.GetPageConditions(); // 刷新Page
+          },
+          failed => {
+            //獲取錯誤
+            console.log(failed);
+            alert(failed);
+          },
+          () => this.closeModal('custom-modal-delete')
+        );
+        break;
     }
   }
 

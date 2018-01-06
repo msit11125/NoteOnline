@@ -22,5 +22,12 @@ namespace NotesOnlineService
         /// 取得儲存過(加到最愛)的單字
         /// </summary>
         List<VocabularyInfo> GetUserFavoriteWords(string guestID, string searchWord, int currentPageNumber, int pageSize, string sortDirection, string sortExpression, out int totalRows, out BaseInfo baseReturn);
+
+        /// <summary>
+        /// 移除單字
+        /// </summary>
+        /// <param name="wordSn">單字Sn</param>
+        /// <returns></returns>
+        void RemoveFavorite(string guestID, int wordSn, out BaseInfo baseReturn);
     }
 }

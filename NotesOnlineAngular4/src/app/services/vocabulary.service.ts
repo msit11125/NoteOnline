@@ -13,6 +13,7 @@ import 'rxjs/add/observable/throw';
 import { AuthenticationService } from "./authentication.service";
 
 export class Vocabulary {
+  public WordSn: number;
   public Word: string;
   public FullHtml: string;
   public ChineseDefin: string[];
@@ -70,5 +71,23 @@ export class VocabularyService {
             return Observable.throw('Unauthorized');
           }
         });
+    }
+
+    //刪除單字
+    public RemoveVocabulary(wordSn: number) {
+      let headers = new Headers(
+        {
+          'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+        }
+      );
+
+      return this.http.delete(environment.apiServer + "/api/vocabularyapi/" + wordSn, { headers: headers })
+        .map(res => res.json())
+        .catch(e => {
+          if (e.status === 401) {
+            return Observable.throw('Unauthorized');
+          }
+        });
+
     }
 }

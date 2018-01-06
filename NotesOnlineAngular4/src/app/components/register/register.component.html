@@ -84,7 +84,8 @@
                         </div>
 
                         <hr />
-                        <button class="btn purple darken-3 waves-effect waves-light right submit" type="submit" name="action">
+                        <button class="btn purple darken-3 waves-effect waves-light right submit"
+                                type="submit" name="action" [disabled]="!(userForm.dirty && userForm.valid)">
                             確認註冊
                             <i class="mdi-content-send right"></i>
                         </button>

@@ -24,6 +24,8 @@ namespace NoteOnlineCore.ViewModels
 
     public class VocabularyInfo: BaseInfo
     {
+        public string WordSn { get; set; }
+
         [StringLength(30, ErrorMessage = "Word 超過長度")]
         public string Word { get; set; }
 

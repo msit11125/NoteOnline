@@ -26,12 +26,8 @@ namespace NotesOnlineWebApi.Controllers
         [Authorize(Roles="一般會員,管理者")]
         public IHttpActionResult GetUserByID()
         {
-            //Get the current claims principal 取得資訊
-            var identity = (ClaimsPrincipal)Thread.CurrentPrincipal;
-
-            // Get the claims values 取得ID
-            string guestID = identity.Claims.Where(c => c.Type == ClaimTypes.NameIdentifier)
-                               .Select(c => c.Value).SingleOrDefault();
+            // 取得用戶資料
+            string guestID = UserInformationHelper.GetUserGuestID();
 
             var userlist = userService.GetUserByID(guestID);
             return Ok(userlist);

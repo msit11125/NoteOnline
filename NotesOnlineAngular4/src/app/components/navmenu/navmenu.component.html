@@ -4,9 +4,10 @@
         <a id="logo-container" [routerLink]="['/home']" class="brand-logo"><span class="material-icons" style="padding-top:10px;">apps</span>&nbsp;NoteO筆記</a>
         <span class="pull-right">{{userName}}</span>
         <ul class="right hide-on-med-and-down">
-            <li><a [routerLink]="['/vocabulary']">單字翻譯 Translate</a></li>
-            <li><a [routerLink]="['/favorite']">我的單字庫 Favorite</a></li>
-            <li><a [routerLink]="['/home']">首頁 Home</a></li>
+            <li><a [routerLink]="['/notes']">筆記</a></li>
+            <li><a [routerLink]="['/vocabulary']">單字翻譯</a></li>
+            <li><a [routerLink]="['/favorite']">我的單字庫</a></li>
+            <li><a [routerLink]="['/home']">首頁</a></li>
             <li *ngIf="!canLogOut"><a [routerLink]="['/login']" >登入</a></li>
             <li *ngIf="canLogOut"><a [routerLink]="" (click)="logOut()">登出</a></li>
 
@@ -18,6 +19,8 @@
             <li><a [routerLink]="['/home']">首頁 Home</a></li>
             <li><a [routerLink]="['/favorite']">我的單字庫 Favorite</a></li>
             <li><a [routerLink]="['/vocabulary']">單字翻譯 Translate</a></li>
+            <li><a [routerLink]="['/notes']">筆記 Notes</a></li>
+
 
         </ul>
         <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>

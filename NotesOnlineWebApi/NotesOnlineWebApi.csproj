@@ -133,6 +133,7 @@
   <ItemGroup>
     <Compile Include="App_Start\AutofacConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Code\UserInformationHelper.cs" />
     <Compile Include="Controllers\AuthApiController.cs" />
     <Compile Include="Controllers\UserApiController.cs" />
     <Compile Include="Controllers\VocabularyApiController.cs" />
