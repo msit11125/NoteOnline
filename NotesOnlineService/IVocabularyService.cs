@@ -16,7 +16,7 @@ namespace NotesOnlineService
         /// <summary>
         /// 儲存單字
         /// </summary>
-        BaseInfo SaveVocabulary(string guestID, VocabularyInfo model);
+        void SaveVocabulary(string guestID, VocabularyInfo model, out BaseInfo saveReturn);
 
         /// <summary>
         /// 取得儲存過(加到最愛)的單字

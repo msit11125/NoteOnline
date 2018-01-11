@@ -19,11 +19,10 @@ namespace NoteOnlineCore.Models
         [StringLength(50)]
         public string NoteTitle { get; set; }
 
-        [Required]
         [StringLength(250)]
         public string NotePhoto { get; set; }
 
-        public DateTime CreateDate { get; set; }
+        public DateTime? CreateDate { get; set; }
 
         public DateTime? LastUpdateDate { get; set; }
 
@@ -31,7 +30,7 @@ namespace NoteOnlineCore.Models
         [StringLength(50)]
         public string GuestID { get; set; }
 
-        public int? TypeID { get; set; }
+        public int TypeID { get; set; }
 
         public virtual NoteDetails NoteDetails { get; set; }
 

@@ -63,9 +63,9 @@ namespace NotesOnlineService
         /// <summary>
         /// 儲存單字
         /// </summary>
-        public BaseInfo SaveVocabulary(string guestID, VocabularyInfo model)
+        public void SaveVocabulary(string guestID, VocabularyInfo model, out BaseInfo saveReturn)
         {
-            BaseInfo saveReturn = new BaseInfo();
+            saveReturn = new BaseInfo();
             var vocabularyModel = _mapper.Map<VocabularyInfo, VocabularyDictionarys>(model);
             try
             {
@@ -77,11 +77,11 @@ namespace NotesOnlineService
                     .FirstOrDefault()
                     .VocabularyDictionarys;
 
-                if (vocabularyCollect.Any(v => v.Vocabulary.ToLower() == model.Word.ToLower())) // 檢查是否已儲存過
+                if (vocabularyCollect.Any(v => v.Vocabulary.ToLower().Trim() == model.Word.ToLower().Trim())) // 檢查是否已儲存過
                 {
                     saveReturn.returnMsgNo = -2;
                     saveReturn.returnMsg = "單字已儲存過。";
-                    return saveReturn;
+                    return;
                 }
 
                 //再看字典庫裡有沒有儲存過此單字
@@ -104,13 +104,13 @@ namespace NotesOnlineService
             {
                 saveReturn.returnMsgNo = -1;
                 saveReturn.returnMsg = "儲存單字時發生例外錯誤。";
-                return saveReturn;
+                return;
             }
 
             saveReturn.returnMsgNo = 1;
             saveReturn.returnMsg = "單字儲存成功!";
-            return saveReturn;
 
+            // Success End
         }
 
         /// <summary>

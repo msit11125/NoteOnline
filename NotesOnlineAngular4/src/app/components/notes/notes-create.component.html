@@ -1,10 +1,10 @@
 <div style="background-color:#fff;padding:1% 10%; ">
 
-
+  <!--Step1 Start-->
   <div id="step1" [hidden]="!(step == 1)">
     <div class="row">
       <h1 class="teal-text"><span class="label label-default">步驟1</span> 新增一個筆記</h1>
-      <p name="text">使用以下編輯器新增或修改文章。</p>
+      <p name="text">使用以下編輯器製作文章。</p>
       <textarea name="editor1"></textarea>
     </div>
 
@@ -21,11 +21,11 @@
         可於上方開始輸入...
       </div>
     </div>
-    
+
     <div class="row">
       <a class="btn teal darken-3 pull-left" [routerLink]="['/notes']">
         <i class="material-icons">format_list_bulleted</i>
-      回到列表
+        回到列表
       </a>
 
       <button class="btn teal darken-1 pull-right" (click)="GoToStep(2)">
@@ -33,12 +33,36 @@
       </button>
     </div>
   </div>
-
-
+  <!--Step1 End-->
+  <!--Step2 Start-->
   <div id="step2" [hidden]="!(step == 2)">
     <div class="row" style="height:490px;">
-      <h1 class="teal-text"><span class="label label-default">步驟2</span> 選擇一個分類</h1>
-
+      <h1 class="teal-text"><span class="label label-default">步驟2</span> 筆記詳細</h1>
+      <br />
+      <div>文章標題：<input type="text" placeholder="輸入文章的標題" /></div>
+      <div>封面圖片：<input type="file" style="display:inline" /></div>
+      <br />
+      <div>
+        文章分類：
+        <select>
+          <option value="" disabled selected>Choose your option</option>
+          <option value="1">Option 1</option>
+          <option value="2">Option 2</option>
+          <option value="3">Option 3</option>
+        </select>
+      </div>
+      <br />
+      <div>
+      <input type="text" style="width:150px;" placeholder="輸入文章的Tag" />
+      <a href="#">加入TAG</a>
+      </div>
+      <div>
+          <div class="tags">
+            <a href="#">lorem<span><i class="material-icons">clear</i></span></a>
+            <a href="#">loremipse<span><i class="material-icons">clear</i></span></a>
+            <a href="#">Esrite<span><i class="material-icons">clear</i></span></a>
+            </div>
+      </div>
     </div>
 
     <div class="row">
@@ -50,5 +74,8 @@
       </button>
     </div>
   </div>
+
+  <!--Step2 End-->
+
 </div>
 

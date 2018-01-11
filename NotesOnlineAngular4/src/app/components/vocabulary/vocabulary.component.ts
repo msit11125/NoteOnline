@@ -70,7 +70,7 @@ export class VocabularyComponent {
         //獲取錯誤
         console.log(failed.json());
         this.fullHtml = "搜尋不到任何結果。";
-        
+        this.searching = false; // ※ failed 並不會導向 complete 
       },
       () => this.searching = false
     );
@@ -96,6 +96,9 @@ export class VocabularyComponent {
       this.openModal('custom-modal-loginError'); // 這個在app.component.html
       return null;
     }
+    // 檢查是否需refreshToken
+    this._authservice.checkRefreshToken();
+
     //有結果才加入
     if (this.chineseDefins) {
       this.loading = true;
@@ -124,25 +127,7 @@ export class VocabularyComponent {
         failed => {
           //獲取錯誤
           console.log(failed);
-          // 是401錯誤就更新Token
-          if (failed === 'Unauthorized') {
-            this._authservice.refreshToken().subscribe(
-              data => {
-                if (data) {
-                  console.log("refresh token done.");
-                  this.addFavorite(); //重新再做一次
-                }
-              },
-              err => {
-                console.log(err);
-                //過久未登入 => 登出
-                this._authservice.logout();
-                window.location.reload();
-              });
-          }
-          else {
-            alert("儲存單字時發生錯誤");
-          }
+          this.searching = false;
         },
         () => this.loading = false
       );

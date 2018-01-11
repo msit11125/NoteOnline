@@ -37,17 +37,28 @@ namespace NotesOnlineService
                 cfg.CreateMap<VocabularyInfo, VocabularyDictionarys>()
                     .ForMember(x => x.Vocabulary, y => y.MapFrom(vm => vm.Word))
                     .ForMember(x => x.Definition, y => y.MapFrom(vm => String.Join("|", vm.ChineseDefin)))
-                    .ForMember(x => x.Contents, y => y.MapFrom(vm => StringCompressorHelper.CompressString(vm.FullHtml) )); // Html格式字串壓縮
+                    .ForMember(x => x.Contents, y => y.MapFrom(vm => StringCompressorHelper.CompressString(vm.FullHtml))); // Html格式字串壓縮
 
 
 
                 cfg.CreateMap<VocabularyDictionarys, VocabularyInfo>()
-                    .ForMember(x=>x.WordSn, y => y.MapFrom(vd=>vd.Sn))
+                    .ForMember(x => x.WordSn, y => y.MapFrom(vd => vd.Sn))
                     .ForMember(x => x.Word, y => y.MapFrom(vd => vd.Vocabulary))
                     .ForMember(x => x.ChineseDefin, y => y.MapFrom(vd => vd.Definition.Split('|').ToList()))
-                    .ForMember(x => x.FullHtml, y => y.MapFrom(vd => StringCompressorHelper.DecompressString(vd.Contents) )); // Html格式字串解壓縮
+                    .ForMember(x => x.FullHtml, y => y.MapFrom(vd => StringCompressorHelper.DecompressString(vd.Contents))); // Html格式字串解壓縮
 
                 cfg.CreateMap<Roles, RoleVM>();
+
+
+                cfg.CreateMap<Notes, NoteVM>()
+                 .ForMember(x => x.Details, y => y.MapFrom(n => n.NoteDetails.Details))
+                 .ForMember(x => x.Tags, y => y.MapFrom(n => n.NoteDetails.Tags.Split(',')));
+                cfg.CreateMap<NoteDetails, NoteVM>()
+                 .ForMember(x => x.Tags, y => y.MapFrom(nv => nv.Tags.Split(',')));
+
+                cfg.CreateMap<NoteVM, Notes>();
+                cfg.CreateMap<NoteVM, NoteDetails>()
+                 .ForMember(x => x.Tags, y => y.MapFrom(nd => String.Join(",", nd.Tags)));
 
             });
 

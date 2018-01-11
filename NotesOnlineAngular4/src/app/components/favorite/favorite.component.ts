@@ -27,13 +27,13 @@ export class FavoriteComponent implements OnInit {
 
   constructor
       (private vocabularyService: VocabularyService,
-       private authenticationService: AuthenticationService,
+       private _authservice: AuthenticationService,
        private modalService: ModalService,
        private _router: Router) {
 
 
     // 驗證是否登入了
-    if (!authenticationService.checkCredentials()) {
+    if (!_authservice.checkCredentials()) {
       this.openModal('custom-modal-loginError');
       return;
     }
@@ -70,6 +70,9 @@ export class FavoriteComponent implements OnInit {
   // 取得頁面查詢後DATA
   public GetPageConditions()
   {
+    // 檢查是否需refreshToken
+    this._authservice.checkRefreshToken();
+
     this.searching = true;
     //取得頁面查詢資訊 (POST前置動作)
     let vocabularyVM = new VocabularyVM();
@@ -95,25 +98,7 @@ export class FavoriteComponent implements OnInit {
       failed => {
         //獲取錯誤
         console.log(failed);
-        if (failed === 'Unauthorized') {
-          // 是401錯誤就更新Token
-          this.authenticationService.refreshToken().subscribe(
-            data => {
-              if (data) {
-                console.log("refresh token done.");
-                this.GetPageConditions(); //重新再做一次
-              } 
-            },
-            err => {
-              console.log(err);
-              //過久未登入 => 登出
-              this.authenticationService.logout();
-              window.location.reload();
-            });
-        }
-        else {
-          alert("查詢單字列表發生錯誤");
-        }
+        this.searching = false;
       },
       () => {
         this.searching = false; // complete subscribe
@@ -152,6 +137,9 @@ export class FavoriteComponent implements OnInit {
         this.rmWord = word;
         break;
       case "remove":
+        // 檢查是否需refreshToken
+        this._authservice.checkRefreshToken();
+
         this.vocabularyService.RemoveVocabulary(this.rmWordSn).subscribe(
           data => {
             // 回傳結果

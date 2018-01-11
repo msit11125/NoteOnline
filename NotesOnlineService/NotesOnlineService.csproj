@@ -23,7 +23,7 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
+    <Optimize>false</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
@@ -54,7 +54,9 @@
   <ItemGroup>
     <Compile Include="Common\EnCryptExtension.cs" />
     <Compile Include="Common\Utilities.cs" />
+    <Compile Include="INoteService.cs" />
     <Compile Include="IVocabularyService.cs" />
+    <Compile Include="NotesService.cs" />
     <Compile Include="Profile\MappingProfile.cs" />
     <Compile Include="IUserService.cs" />
     <Compile Include="Helpers\StringCompressorHelper.cs" />

@@ -48,12 +48,7 @@ export class VocabularyService {
       );
 
       return this.http.post(environment.apiServer + "/api/vocabularyapi", JSON.stringify(vocabulary), { headers: headers })
-        .map(res => res.json())
-        .catch(e => {
-          if (e.status === 401) {
-            return Observable.throw('Unauthorized');
-          }
-        });
+        .map(res => res.json());
 
     }
 
@@ -65,12 +60,7 @@ export class VocabularyService {
         }
       );
       return this.http.post(environment.apiServer + "/api/vocabularyapi/getfavorite", vocabularyVM, { headers: headers })
-        .map(res => res.json())
-        .catch(e => {
-          if (e.status === 401) {
-            return Observable.throw('Unauthorized');
-          }
-        });
+        .map(res => res.json());
     }
 
     //刪除單字
@@ -82,12 +72,7 @@ export class VocabularyService {
       );
 
       return this.http.delete(environment.apiServer + "/api/vocabularyapi/" + wordSn, { headers: headers })
-        .map(res => res.json())
-        .catch(e => {
-          if (e.status === 401) {
-            return Observable.throw('Unauthorized');
-          }
-        });
+        .map(res => res.json());
 
     }
 }

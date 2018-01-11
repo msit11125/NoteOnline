@@ -40,7 +40,7 @@ namespace NotesOnlineWebApi.Controllers
         [AllowAnonymous]
         public IHttpActionResult SearchWord(string word)
         {
-            BaseInfo baseReturn = new BaseInfo();
+            BaseInfo baseReturn;
             var searchRE = _vocabularyService.SearchVocabulary(word, out baseReturn, new SearchWordStrategy_VoiceTube());
 
             if (baseReturn.returnMsgNo != 1)
@@ -59,10 +59,10 @@ namespace NotesOnlineWebApi.Controllers
             // 取得用戶資料
             string guestID = UserInformationHelper.GetUserGuestID();
 
+            BaseInfo baseReturn;
+           _vocabularyService.SaveVocabulary(guestID, model, out baseReturn);
 
-            BaseInfo result = _vocabularyService.SaveVocabulary(guestID, model);
-
-            return Ok(result);
+            return Ok(baseReturn);
         }
 
 
@@ -83,8 +83,7 @@ namespace NotesOnlineWebApi.Controllers
             string sortDirection = model.SortDirection;
             int totalRows = 0;
 
-            BaseInfo baseReturn = new BaseInfo();
-
+            BaseInfo baseReturn;
             List<VocabularyInfo> vocabularyList = _vocabularyService.GetUserFavoriteWords(guestID, searchWord, currentPageNumber,
                 pageSize, sortExpression, sortDirection, out totalRows, out baseReturn);
 
@@ -93,8 +92,6 @@ namespace NotesOnlineWebApi.Controllers
             model.TotalRows = totalRows;
             model.TotalPages = Utilities.CalculateTotalPages(totalRows, pageSize);
             model.VocabularyList = vocabularyList;
-
-
 
             if (baseReturn.returnMsgNo != 1)
                 return BadRequest(baseReturn.returnMsg);
