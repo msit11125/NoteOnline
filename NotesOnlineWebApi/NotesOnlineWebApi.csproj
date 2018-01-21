@@ -121,6 +121,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\images\download.jpg" />
     <Content Include="App_Data\NotesOnline.mdf" />
     <Content Include="App_Data\NotesOnline_log.ldf">
       <DependentUpon>NotesOnline.mdf</DependentUpon>
@@ -135,7 +136,9 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Code\UserInformationHelper.cs" />
     <Compile Include="Controllers\AuthApiController.cs" />
+    <Compile Include="Controllers\ImageController.cs" />
     <Compile Include="Controllers\NotesApiController.cs" />
+    <Compile Include="Controllers\TypesApiController.cs" />
     <Compile Include="Controllers\UserApiController.cs" />
     <Compile Include="Controllers\VocabularyApiController.cs" />
     <Compile Include="Global.asax.cs">

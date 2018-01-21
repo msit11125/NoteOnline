@@ -26,11 +26,16 @@ namespace NoteOnlineCore.ViewModels
         [StringLength(50)]
         public string GuestID { get; set; }
 
+        public string GuestName { get; set; }
+
         public int TypeID { get; set; }
+
+        public string TypeName { get; set; }
 
         [StringLength(2000)]
         public string Details { get; set; }
 
         public IEnumerable<string> Tags { get; set; }  // Mapping時使用「,」分隔
+
     }
 }

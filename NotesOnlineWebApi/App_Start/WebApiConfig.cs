@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Web.Http;
 
 namespace NotesOnlineWebApi
@@ -20,12 +21,13 @@ namespace NotesOnlineWebApi
                 defaults: new { id = RouteParameter.Optional }
             );
 
-            //解決循環參考的問題
+            // 解決循環參考的問題
             GlobalConfiguration.Configuration.Formatters.JsonFormatter.SerializerSettings
                 .ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
-            //移除回傳xml格式
+            // 移除回傳xml格式
             GlobalConfiguration.Configuration.Formatters
                 .Remove(GlobalConfiguration.Configuration.Formatters.XmlFormatter);
+
 
         }
     }

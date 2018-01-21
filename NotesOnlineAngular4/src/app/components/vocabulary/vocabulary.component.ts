@@ -1,8 +1,7 @@
-import { Component, Pipe, PipeTransform } from '@angular/core';
+import { Component} from '@angular/core';
 import { Router } from "@angular/router";
 import { VocabularyService, Vocabulary } from "../../services/vocabulary.service";
 
-import { DomSanitizer } from '@angular/platform-browser';
 import { AuthenticationService } from "../../services/authentication.service";
 import { ModalService } from '../../services/modal.service';
 
@@ -151,12 +150,4 @@ export class VocabularyComponent {
 
 
 
-// ---- 建立safeHtml管道 (Pipe) ----
-//      :使Server傳回的Html驗證安全性
-@Pipe({ name: 'safeHtml' })
-export class SafeHtmlPipe implements PipeTransform {
-  constructor(private sanitized: DomSanitizer) { }
-  transform(value) {
-    return this.sanitized.bypassSecurityTrustHtml(value);
-  }
-}
+

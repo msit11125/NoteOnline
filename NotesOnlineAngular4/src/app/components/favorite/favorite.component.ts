@@ -68,10 +68,10 @@ export class FavoriteComponent implements OnInit {
 
 
   // 取得頁面查詢後DATA
-  public GetPageConditions()
+  public async GetPageConditions()
   {
     // 檢查是否需refreshToken
-    this._authservice.checkRefreshToken();
+    await this._authservice.checkRefreshToken();
 
     this.searching = true;
     //取得頁面查詢資訊 (POST前置動作)

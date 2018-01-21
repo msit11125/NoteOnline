@@ -7,8 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="src\app\components\notes\notes-detail.component.ts" />
     <None Remove="src\app\constant.service.ts" />
     <None Remove="src\app\models\BaseInfo.ts" />
+    <None Remove="src\app\models\Note.ts" />
+    <None Remove="src\app\pipe\safehtml-pipe.ts" />
+    <None Remove="src\app\services\notes-service.ts" />
+    <None Remove="src\app\services\types-service.ts" />
   </ItemGroup>
 
   <ItemGroup>
@@ -54,14 +59,20 @@
     <TypeScriptCompile Include="src\app\components\home\home.component.ts" />
     <TypeScriptCompile Include="src\app\components\login\login.component.ts" />
     <TypeScriptCompile Include="src\app\components\navmenu\navmenu.component.ts" />
+    <TypeScriptCompile Include="src\app\components\notes\notes-detail.component.ts" />
     <TypeScriptCompile Include="src\app\components\notes\notes.component.ts" />
     <TypeScriptCompile Include="src\app\components\notes\notes-create.component.ts" />
     <TypeScriptCompile Include="src\app\components\register\control-messages.component.ts" />
     <TypeScriptCompile Include="src\app\components\register\register.component.ts" />
     <TypeScriptCompile Include="src\app\components\vocabulary\vocabulary.component.ts" />
     <TypeScriptCompile Include="src\app\models\BaseInfo.ts" />
+    <TypeScriptCompile Include="src\app\models\ArticleType.ts" />
+    <TypeScriptCompile Include="src\app\models\Note.ts" />
+    <TypeScriptCompile Include="src\app\pipe\safehtml-pipe.ts" />
     <TypeScriptCompile Include="src\app\services\authentication.service.ts" />
+    <TypeScriptCompile Include="src\app\services\notes-service.ts" />
     <TypeScriptCompile Include="src\app\services\shared-service.ts" />
+    <TypeScriptCompile Include="src\app\services\types-service.ts" />
     <TypeScriptCompile Include="src\app\services\validation.service.ts" />
     <TypeScriptCompile Include="src\app\services\vocabulary.service.ts" />
   </ItemGroup>

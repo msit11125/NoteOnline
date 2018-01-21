@@ -12,11 +12,12 @@ import { LoginComponent } from './components/login/login.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { RegisterComponent } from "./components/register/register.component";
 import { ControlMessagesComponent } from "./components/register/control-messages.component";
-import { VocabularyComponent, SafeHtmlPipe } from "./components/vocabulary/vocabulary.component";
+import { VocabularyComponent} from "./components/vocabulary/vocabulary.component";
 import { ModalComponent } from './directives/modal.component'; // 自訂彈出Modal
 import { FavoriteComponent } from './components/favorite/favorite.component';
 import { NotesComponent } from "./components/notes/notes.component";
 import { NotesCreateComponent } from "./components/notes/notes-create.component";
+import { NotesDetailComponent } from "./components/notes/notes-detail.component";
 
 
 import { AuthenticationService } from './services/authentication.service'; // Service 登入服務
@@ -24,10 +25,13 @@ import { SharedService } from "./services/shared-service";
 import { ValidationService } from "./services/validation.service";
 import { VocabularyService } from "./services/vocabulary.service";
 import { ModalService } from './services/modal.service';
+import { TypesService } from "./services/types-service";
+import { NotesService } from "./services/notes-service";
 
 
 // 額外下載的module
 import { LoadingModule, ANIMATION_TYPES } from 'ngx-loading'; /* 與 materialize.css => 5120行 衝突 */
+import { SafeHtmlPipe } from "./pipe/safehtml-pipe";
 
 @NgModule({
   imports: [
@@ -43,7 +47,8 @@ import { LoadingModule, ANIMATION_TYPES } from 'ngx-loading'; /* 與 materialize
       { path: 'vocabulary', component: VocabularyComponent },
       { path: 'favorite', component: FavoriteComponent },
       { path: 'notes', component: NotesComponent },
-      { path: 'notes-create', component: NotesCreateComponent},
+      { path: 'notes-create', component: NotesCreateComponent },
+      { path: 'notes-detail/:id', component: NotesDetailComponent },
       { path: '**', redirectTo: 'home' },
 
     ]),
@@ -71,6 +76,7 @@ import { LoadingModule, ANIMATION_TYPES } from 'ngx-loading'; /* 與 materialize
     FavoriteComponent,
     NotesComponent,
     NotesCreateComponent,
+    NotesDetailComponent
   ],
   bootstrap: [AppComponent],
   providers: [
@@ -78,9 +84,10 @@ import { LoadingModule, ANIMATION_TYPES } from 'ngx-loading'; /* 與 materialize
     AuthenticationService,
     SharedService, // 共用 Service
     ValidationService, // 驗證 Service
-    VocabularyService, // 單字 Service
+    VocabularyService, 
     ModalService,// 自製Modal
-
+    TypesService, 
+    NotesService,
   ]
 })
 export class AppModule { }

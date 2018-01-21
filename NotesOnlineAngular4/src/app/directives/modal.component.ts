@@ -34,12 +34,13 @@ export class ModalComponent implements OnInit, OnDestroy {
         this.element.appendTo('body');
 
         // close modal on background click
-        this.element.on('click', function (e: any) {
-            var target = $(e.target);
-            if (!target.closest('.modal-body').length) {
-                modal.close();
-            }
-        });
+        // 按任何滑鼠鍵就會關閉Modal
+        //this.element.on('click', function (e: any) {
+        //    var target = $(e.target);
+        //    if (!target.closest('.modal-body').length) {
+        //        modal.close();
+        //    }
+        //});
 
         // add self (this modal instance) to the modal service so it's accessible from controllers
         this.modalService.add(this);

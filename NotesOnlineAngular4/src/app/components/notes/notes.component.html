@@ -4,11 +4,14 @@
     <div class="row">
       <a class="btn" [routerLink]="['/notes-create']">新增一個筆記</a>
     </div>
-
-      <div class="row">
+      <div class="row" *ngIf="!notes || notes.length < 1">
+        尚未新增任何一篇文章。
+      </div>
+      <div class="row" *ngFor="let note of notes">
         <div class="col-xs-12 col-sm-3 col-md-3">
           <a href="javscript:void(0)">
-            <img src="http://wanderluxe.theluxenomad.com/wp-content/uploads/2014/10/http-www.urchinbali.comgallery.jpg" class="img-responsive img-box img-thumbnail">
+            <img *ngIf="note.NotePhoto != ''" src="{{note.NotePhoto}}" class="img-responsive img-box img-thumbnail">
+            <img *ngIf="note.NotePhoto == ''" src="assets/images/noteSample1.jpg" class="img-responsive img-box img-thumbnail">
           </a>
         </div>
         <div class="col-xs-12 col-sm-9 col-md-9">
@@ -16,25 +19,25 @@
             <div class="list-group-item">
               <div class="row-picture">
                 <a href="javscript:void(0)" title="sintret">
-                  <img class="circle img-thumbnail img-box" src="https://lh3.googleusercontent.com/arGSSq9IhCs0tcZzbRPCS_apl1XOE2jgmELW4tgnDwCZSM08_ceuWxuSzq8cdTqBiGQ=w300" alt="sintret">
+                  <img class="circle img-thumbnail img-box" src="assets/images/noteSample2.png" alt="sintret" width="250" height="167">
                 </a>
               </div>
               <div class="row-content">
                 <div class="list-group-item-heading">
                   <a href="javscript:void(0)" title="sintret">
-                    <small>super01</small>
+                    <small>{{note.GuestName}}</small>
                   </a>
                 </div>
                 <small>
-                  <i class="glyphicon glyphicon-time"></i> 2018/01/09
+                  <i class="glyphicon glyphicon-time"></i> 最後更新時間: {{note.LastUpdateDate | date}}
                   <br>
-                  <span class="explore"><i class="glyphicon glyphicon-th"></i> <a href="javscript:void(0)">開箱心得</a></span>
+                  <span class="explore"><i class="glyphicon glyphicon-th"></i> <a href="javscript:void(0)">{{note.TypeName}}</a></span>
                 </small>
               </div>
             </div>
           </div>
-          <h4><a href="#">5 of Bali’s Spanking New Haunts - WanderLuxe Magazine</a></h4>
-          <p>Naturally, we know where Bali's newest restaurants are and what to order, so give that private chef a rest and check out these spanking new haunts.</p>
+          <h4><a [routerLink]="['/notes-detail', note.NoteID]">{{note.NoteTitle}}</a></h4>
+          <p>{{note.Details}}</p>
         </div>
         
       </div>
@@ -44,3 +47,6 @@
 
 
 </div>
+
+<!--Spinner-->
+<ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '14px' }"></ngx-loading>
