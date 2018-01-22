@@ -2,47 +2,60 @@
 
   <div class="container">
     <div class="row">
-      <a class="btn" [routerLink]="['/notes-create']">新增一個筆記</a>
-    </div>
-      <div class="row" *ngIf="!notes || notes.length < 1">
-        尚未新增任何一篇文章。
+      <div class="col-xs-12">
+        <a class="btn" [routerLink]="['/notes-create']">新增一個筆記</a>
       </div>
-      <div class="row" *ngFor="let note of notes">
-        <div class="col-xs-12 col-sm-3 col-md-3">
-          <a href="javscript:void(0)">
-            <img *ngIf="note.NotePhoto != ''" src="{{note.NotePhoto}}" class="img-responsive img-box img-thumbnail">
-            <img *ngIf="note.NotePhoto == ''" src="assets/images/noteSample1.jpg" class="img-responsive img-box img-thumbnail">
-          </a>
+    </div>
+    <div class="row" *ngIf="!searching && (!notes || notes.length < 1)">
+      尚未新增任何一篇文章。
+    </div>
+    <div class="row" *ngIf="searching">
+      <div class="col-xs-12" style="height:500px;">
+        <div style="background:white;">
+          <img [src]="imgPath" width="200" height="200" style=" display: block;margin: auto;" /> <!-- Angular存取圖片路徑 -->
+          &nbsp;
+          <h2 class="text-center"><i>載入中，請稍後...</i></h2>
         </div>
-        <div class="col-xs-12 col-sm-9 col-md-9">
-          <div class="list-group">
-            <div class="list-group-item">
-              <div class="row-picture">
+      </div>
+    </div>
+    <div class="row" *ngFor="let note of notes">
+      <div class="col-xs-12 col-sm-3 col-md-3">
+        <a href="javscript:void(0)">
+          <div style="width:250px;height:167px">
+            <img *ngIf="note.NotePhoto != ''" src="{{note.NotePhoto}}" class="img-responsive img-box img-thumbnail" style="width:100%;height:100%">
+            <img *ngIf="note.NotePhoto == ''" src="assets/images/noteSample1.jpg" class="img-responsive img-box img-thumbnail" style="width:100%;height:100%">
+          </div>
+        </a>
+      </div>
+      <div class="col-xs-12 col-sm-9 col-md-9">
+        <div class="list-group">
+          <div class="list-group-item">
+            <div class="row-picture">
+              <a href="javscript:void(0)" title="sintret">
+                <img class="circle img-thumbnail img-box" src="assets/images/noteSample2.png" alt="sintret">
+              </a>
+            </div>
+            <div class="row-content">
+              <div class="list-group-item-heading">
                 <a href="javscript:void(0)" title="sintret">
-                  <img class="circle img-thumbnail img-box" src="assets/images/noteSample2.png" alt="sintret" width="250" height="167">
+                  <small>{{note.GuestName}}</small>
                 </a>
               </div>
-              <div class="row-content">
-                <div class="list-group-item-heading">
-                  <a href="javscript:void(0)" title="sintret">
-                    <small>{{note.GuestName}}</small>
-                  </a>
-                </div>
-                <small>
-                  <i class="glyphicon glyphicon-time"></i> 最後更新時間: {{note.LastUpdateDate | date}}
-                  <br>
-                  <span class="explore"><i class="glyphicon glyphicon-th"></i> <a href="javscript:void(0)">{{note.TypeName}}</a></span>
-                </small>
-              </div>
+              <small>
+                <i class="glyphicon glyphicon-time"></i> 最後更新時間: {{note.LastUpdateDate | date}}
+                <br>
+                <span class="explore"><i class="glyphicon glyphicon-th"></i> <a href="javscript:void(0)">{{note.TypeName}}</a></span>
+              </small>
             </div>
           </div>
-          <h4><a [routerLink]="['/notes-detail', note.NoteID]">{{note.NoteTitle}}</a></h4>
-          <p>{{note.Details}}</p>
         </div>
-        
+        <h4><a [routerLink]="['/notes-detail', note.NoteID]">{{note.NoteTitle}}</a></h4>
+        <p>{{note.Details}}</p>
       </div>
+
+    </div>
     <hr />
-      
+
   </div>
 
 

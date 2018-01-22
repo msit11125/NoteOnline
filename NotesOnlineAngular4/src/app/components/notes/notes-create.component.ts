@@ -147,7 +147,7 @@ export class NotesCreateComponent implements OnInit, AfterViewInit {
     this.loading = true;
 
     console.log(this.note);
-    this.authService.checkRefreshToken();
+    await this.authService.checkRefreshToken();
 
     //取得ckeditor text
     this.note.Details = CKEDITOR.instances.editor1.getData();

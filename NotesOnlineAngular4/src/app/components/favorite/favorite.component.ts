@@ -130,7 +130,7 @@ export class FavoriteComponent implements OnInit {
   // 刪除單字方法
   private rmWordSn: number = 0; // 準備移除的wordSn
   private rmWord: string = ""; // 準備移除的word
-  public RemoveWord(mode: string, wordSn: number, word: string) {
+  public async RemoveWord(mode: string, wordSn: number, word: string) {
     switch (mode) {
       case "set":
         this.rmWordSn = wordSn;
@@ -138,7 +138,7 @@ export class FavoriteComponent implements OnInit {
         break;
       case "remove":
         // 檢查是否需refreshToken
-        this._authservice.checkRefreshToken();
+        await this._authservice.checkRefreshToken();
 
         this.vocabularyService.RemoveVocabulary(this.rmWordSn).subscribe(
           data => {

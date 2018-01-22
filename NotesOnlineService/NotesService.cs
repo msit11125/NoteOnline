@@ -54,7 +54,7 @@ namespace NotesOnlineService
             noteVMs.ForEach(n => n.NotePhoto = (n.NotePhoto == null) ? "" : getImageUrl + n.NotePhoto);
 
             // 讀取些許文字
-            noteVMs.ForEach(n => n.Details = SubStringFewWords(n.Details, 30));
+            noteVMs.ForEach(n => n.Details = SubStringFewWords(n.Details, 100));
 
 
             baseReturn.returnMsgNo = 1;
@@ -189,12 +189,17 @@ namespace NotesOnlineService
         {
             var doc = new HtmlDocument();
             doc.LoadHtml(content);
-            if (content.Length <= lenth)
+            var innerText = doc.DocumentNode.InnerText
+                .Replace("&nbsp;","")
+                .Replace("\r","")
+                .Replace("\n","");
+
+            if (innerText.Length <= lenth)
             {
-                return doc.DocumentNode.InnerText;
+                return innerText;
             }
 
-            return doc.DocumentNode.InnerText.Substring(0, lenth) + "...";
+            return innerText.Substring(0, lenth) + "...";
         }
 
     }

@@ -89,14 +89,14 @@ export class VocabularyComponent {
   }
 
   //加到最愛
-  addFavorite() {
+  async addFavorite() {
     // 檢查登入狀態
     if (!this._authservice.checkCredentials()) {
       this.openModal('custom-modal-loginError'); // 這個在app.component.html
       return null;
     }
     // 檢查是否需refreshToken
-    this._authservice.checkRefreshToken();
+    await this._authservice.checkRefreshToken();
 
     //有結果才加入
     if (this.chineseDefins) {

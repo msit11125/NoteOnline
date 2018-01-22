@@ -14,3 +14,7 @@ UI層:　NotesOnlineWebApi、NotesOnlineAngular4 <br/>
 ### Vocabulary Search
 #### 單字查詢 (資源:VoiceTube)
 ![image](https://user-images.githubusercontent.com/25237461/34454883-3dff5c80-edaf-11e7-8619-421d4d9dc450.png)
+### Write Notes
+####  筆記/部落格
+![image](https://user-images.githubusercontent.com/25237461/35226789-590228c6-ffc7-11e7-886f-475aac676ac4.png)
+

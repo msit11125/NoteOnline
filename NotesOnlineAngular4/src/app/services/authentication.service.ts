@@ -116,27 +116,29 @@ export class AuthenticationService {
   }
 
   // 檢查是否需RefreshToken => 並更新Token
-  public checkRefreshToken() {
+  public async checkRefreshToken() {
     //檢查refreshtoken cookie是否不存在(過期)
     var username = this.getCookie("TokenExpire");
     if (username != "") {
       // 尚未過期
     } else {
       // 需更新Token
-      this.refreshToken().subscribe(
-        data => {
-          if (data) {
+      await this.refreshToken()
+        .toPromise()
+        .then(result => {
+          if (result) {
             console.log("refresh token done.");
             // 設定accessToken的routine => 120分鐘 (與Server端相同)
             this.setCookie("TokenExpire", "exist", 120);
           }
-        },
-        err => {
-          console.log(err);
+        })
+        .catch(failed => {
+          console.log(failed);
           //過久未登入 => 登出
           this.logout();
           window.location.reload();
         });
+
     }
   }
 

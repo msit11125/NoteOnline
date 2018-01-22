@@ -16,7 +16,8 @@ declare var $: any;
 export class NotesComponent implements OnInit, AfterViewInit {
 
   private notes: Note[];
-  loading: boolean = false; // Spinner
+  searching: boolean = false; // Spinner
+  private imgPath: string = "./assets/images/DoubleRing.gif"; // 取得圖片相對路徑
 
   constructor(
     private notesService: NotesService,
@@ -41,18 +42,18 @@ export class NotesComponent implements OnInit, AfterViewInit {
   }
 
   public async GetAndFillNotes() {
-    this.loading = true;
+    this.searching = true;
     await this.authService.checkRefreshToken();
-
+    console.log("get note service");
     this.notesService.GetNotes().subscribe(
       data => {
         console.log(data);
         this.notes = data;
-        this.loading = false;
+        this.searching = false;
       },
       failed => {
         console.log(failed);
-        this.loading = false;
+        this.searching = false;
 
       }
     )
