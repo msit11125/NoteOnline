@@ -18,6 +18,7 @@ import { FavoriteComponent } from './components/favorite/favorite.component';
 import { NotesComponent } from "./components/notes/notes.component";
 import { NotesCreateComponent } from "./components/notes/notes-create.component";
 import { NotesDetailComponent } from "./components/notes/notes-detail.component";
+import { NotesUpdateComponent } from "./components/notes/notes-update.component";
 
 
 import { AuthenticationService } from './services/authentication.service'; // Service 登入服務
@@ -49,16 +50,17 @@ import { SafeHtmlPipe } from "./pipe/safehtml-pipe";
       { path: 'notes', component: NotesComponent },
       { path: 'notes-create', component: NotesCreateComponent },
       { path: 'notes-detail/:id', component: NotesDetailComponent },
+      { path: 'notes-update/:id', component: NotesUpdateComponent },
       { path: '**', redirectTo: 'home' },
 
     ]),
     LoadingModule.forRoot({  // 自訂Loading樣式
-      animationType: ANIMATION_TYPES.threeBounce,
-      backdropBackgroundColour: 'rgba(0,0,0,0.4)',
+      animationType: ANIMATION_TYPES.rectangleBounce,
+      backdropBackgroundColour: 'rgba(0,0,0,0.8)',
       backdropBorderRadius: '4px',
-      primaryColour: '#00AA88',
-      secondaryColour: '#00AA88',
-      tertiaryColour: '#00AA88'
+      primaryColour: '#fff',
+      secondaryColour: '#fff',
+      tertiaryColour: '#fff'
     }),
     
   ],
@@ -76,7 +78,8 @@ import { SafeHtmlPipe } from "./pipe/safehtml-pipe";
     FavoriteComponent,
     NotesComponent,
     NotesCreateComponent,
-    NotesDetailComponent
+    NotesDetailComponent,
+    NotesUpdateComponent
   ],
   bootstrap: [AppComponent],
   providers: [

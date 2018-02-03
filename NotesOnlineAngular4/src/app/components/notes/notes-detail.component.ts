@@ -42,6 +42,12 @@ declare var $: any;
             <i class="material-icons">clear</i>
             刪除文章
          </a>
+        
+         <a class="btn teal darken-1 pull-right" [routerLink]="['/notes-update', note.NoteID]" style="margin-right: 20px;">
+            <i class="material-icons">edit</i>
+            修改文章
+         </a>
+
     </div>
     
 </div>

@@ -45,6 +45,12 @@ export class NotesCreateComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
+    // 驗證是否登入了
+    if (!this.authService.checkCredentials()) {
+      this.openModal('custom-modal-loginError');
+      return;
+    }
+
     this.typesService.GetArticleTypes().subscribe(
       data => {
         this.articleType = data;

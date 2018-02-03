@@ -66,6 +66,22 @@ namespace NotesOnlineWebApi.Controllers
             return Ok(baseReturn);
         }
 
+        [AcceptVerbs("PUT")]
+        public IHttpActionResult UpdateNote(NoteVM model)
+        {
+            // 取得用戶資料
+            BaseInfo baseReturn;
+            string guestID = UserInformationHelper.GetUserGuestID();
+            model.GuestID = guestID;
+
+            _noteService.UpdateNote(model, out baseReturn);
+
+            if (baseReturn.returnMsgNo != 1)
+                return BadRequest(baseReturn.returnMsg);
+
+            return Ok(baseReturn);
+        }
+
         [AcceptVerbs("DELETE")]
         public IHttpActionResult DeleteNote(string noteId)
         {
@@ -95,12 +111,18 @@ namespace NotesOnlineWebApi.Controllers
                     var postedFile = httpRequest.Files[file];
                     newFileName = DateTime.Now.ToString("yyyyMMddHHmmss_") + postedFile.FileName;
 
-                    var filePath = HttpContext.Current.Server.MapPath(
-                        "~/App_Data/images/" + newFileName);
-                    postedFile.SaveAs(filePath);
+                    //檢查照片不存在
+                    if (!_noteService.CheckPhotoIsExist(newFileName))
+                    {
+                        var filePath = HttpContext.Current.Server.MapPath(
+                      "~/App_Data/images/" + newFileName);
+                        postedFile.SaveAs(filePath);
+                    }
+
                 }
             }
             response.Content = new StringContent(newFileName);
+
             return response;
         }
     }

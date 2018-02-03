@@ -6,6 +6,7 @@ namespace NotesOnlineService
     public interface INoteService
     {
         List<NoteVM> GetNotes(string guestID, out BaseInfo baseReturn);
+        bool CheckPhotoIsExist(string photoName);
         NoteVM GetNotesByID(string NoteID, out BaseInfo baseReturn);
         void InsertNote(NoteVM noteVM, out BaseInfo baseReturn);
         void UpdateNote(NoteVM noteVM, out BaseInfo baseReturn);

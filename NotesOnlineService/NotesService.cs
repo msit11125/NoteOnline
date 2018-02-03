@@ -51,7 +51,7 @@ namespace NotesOnlineService
                 HttpContext.Current.Request.ApplicationPath.TrimEnd('/');
             var getImageUrl = baseUrl + "/image/get?imageName=";
 
-            noteVMs.ForEach(n => n.NotePhoto = (n.NotePhoto == null) ? "" : getImageUrl + n.NotePhoto);
+            noteVMs.ForEach(n => n.NotePhoto = (string.IsNullOrEmpty(n.NotePhoto)) ? "" : getImageUrl + n.NotePhoto);
 
             // 讀取些許文字
             noteVMs.ForEach(n => n.Details = SubStringFewWords(n.Details, 100));
@@ -70,6 +70,14 @@ namespace NotesOnlineService
             try
             {
                 note = _unitOfWork.NotesRepository.GetByID(NoteID);
+                // 替換成 GetImage Controller Url
+                // Combine Uri
+                string baseUrl = HttpContext.Current.Request.Url.Scheme + "://" +
+                    HttpContext.Current.Request.Url.Authority +
+                    HttpContext.Current.Request.ApplicationPath.TrimEnd('/');
+                var getImageUrl = baseUrl + "/image/get?imageName=";
+                note.NotePhoto = (string.IsNullOrEmpty(note.NotePhoto)) ? "" : getImageUrl + note.NotePhoto;
+
                 noteVM = _mapper.Map<Notes, NoteVM>(note);
                 noteVM = _mapper.Map<NoteDetails, NoteVM>(note.NoteDetails, noteVM);
             }
@@ -85,6 +93,19 @@ namespace NotesOnlineService
             return noteVM;
         }
 
+        //檢查照片是否已存在
+        public bool CheckPhotoIsExist(string photoName)
+        {
+            if (!string.IsNullOrEmpty(photoName))
+            {
+                var anyNotePhoto = _unitOfWork.NotesRepository
+                .Get(filter: n => n.NotePhoto == photoName).Any();
+                if (!anyNotePhoto)
+                    return true;
+            }
+            return false;
+        }
+
         public void InsertNote(NoteVM noteVM, out BaseInfo baseReturn)
         {
             baseReturn = new BaseInfo();
@@ -97,18 +118,12 @@ namespace NotesOnlineService
                 = Guid.NewGuid().ToString("D").ToUpper() + "_" + DateTime.Now.ToString("yyyyMMdd");
             try
             {
-                if (!string.IsNullOrEmpty(noteVM.NotePhoto))
+                if(this.CheckPhotoIsExist(noteVM.NotePhoto))
                 {
-                    var anyNotePhoto = _unitOfWork.NotesRepository
-                    .Get(filter: n => n.NotePhoto == noteVM.NotePhoto).Any();
-                    if (anyNotePhoto)
-                    {
-                        baseReturn.returnMsgNo = -2;
-                        baseReturn.returnMsg = "此張照片已被新增過。";
-                        return;
-                    }
+                    baseReturn.returnMsgNo = -2;
+                    baseReturn.returnMsg = "照片新增重複。";
+                    return;
                 }
-
                 _unitOfWork.NotesRepository.Insert(newNote);
                 _unitOfWork.SaveChanges();
             }
@@ -128,26 +143,24 @@ namespace NotesOnlineService
         {
             baseReturn = new BaseInfo();
 
-            var newNote = _mapper.Map<NoteVM, Notes>(noteVM);
-            newNote.NoteDetails = _mapper.Map<NoteVM, NoteDetails>(noteVM);
-            newNote.LastUpdateDate = DateTime.Now;
             try
             {
-                if (!string.IsNullOrEmpty(noteVM.NotePhoto))
-                {
-                    var anyNotePhoto = _unitOfWork.NotesRepository
-                    .Get(filter: n => n.NotePhoto == noteVM.NotePhoto).Any();
-                    if (anyNotePhoto)
-                    {
-                        baseReturn.returnMsgNo = -2;
-                        baseReturn.returnMsg = "此張照片已被新增過。";
-                        return;
-                    }
-                }
+                string baseUrl = HttpContext.Current.Request.Url.Scheme + "://" +
+                                HttpContext.Current.Request.Url.Authority +
+                                HttpContext.Current.Request.ApplicationPath.TrimEnd('/');
+                var getImageUrl = baseUrl + "/image/get?imageName=";
 
+                noteVM.NotePhoto = RemoveString(noteVM.NotePhoto, getImageUrl);
+                
                 var oldNote = _unitOfWork.NotesRepository.GetByID(noteVM.NoteID);
-                var updatedNote = _mapper.Map(newNote, oldNote); // 更新 ( Mapping Self )
-                oldNote = updatedNote;
+
+                var newNote = _mapper.Map<NoteVM, Notes>(noteVM);
+                newNote.NoteDetails = _mapper.Map<NoteVM, NoteDetails>(noteVM, oldNote.NoteDetails);
+                newNote.LastUpdateDate = DateTime.Now;
+
+                oldNote = _mapper.Map(newNote, oldNote); // 更新 ( Mapping Self )
+
+                _unitOfWork.NotesRepository.Update(oldNote);
 
                 _unitOfWork.SaveChanges();
             }
@@ -190,9 +203,9 @@ namespace NotesOnlineService
             var doc = new HtmlDocument();
             doc.LoadHtml(content);
             var innerText = doc.DocumentNode.InnerText
-                .Replace("&nbsp;","")
-                .Replace("\r","")
-                .Replace("\n","");
+                .Replace("&nbsp;", "")
+                .Replace("\r", "")
+                .Replace("\n", "");
 
             if (innerText.Length <= lenth)
             {
@@ -202,5 +215,10 @@ namespace NotesOnlineService
             return innerText.Substring(0, lenth) + "...";
         }
 
+
+        private string RemoveString(string source, string removeStr)
+        {
+            return source.Replace(removeStr, "");
+        }
     }
 }

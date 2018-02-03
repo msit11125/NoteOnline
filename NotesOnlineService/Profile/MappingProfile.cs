@@ -48,14 +48,24 @@ namespace NotesOnlineService
                 cfg.CreateMap<Notes, NoteVM>()
                  .ForMember(x => x.Details, y => y.MapFrom(n => n.NoteDetails.Details))
                  .ForMember(x => x.Tags, y => y.MapFrom(n => n.NoteDetails.Tags.Split(',')))
-                 .ForMember(x=>x.GuestName,y=>y.MapFrom(n=>n.Users.UserDetails.Name))
-                 .ForMember(x=>x.TypeName,y=>y.MapFrom(n=>n.Types.TypeName));
+                 .ForMember(x => x.GuestName, y => y.MapFrom(n => n.Users.UserDetails.Name))
+                 .ForMember(x => x.TypeName, y => y.MapFrom(n => n.Types.TypeName));
                 cfg.CreateMap<NoteDetails, NoteVM>()
                  .ForMember(x => x.Tags, y => y.MapFrom(nv => nv.Tags.Split(',')));
 
-                cfg.CreateMap<NoteVM, Notes>();
+                cfg.CreateMap<NoteVM, Notes>() ;
                 cfg.CreateMap<NoteVM, NoteDetails>()
-                 .ForMember(x => x.Tags, y => y.MapFrom(nd => String.Join(",", nd.Tags)));
+                 .ForMember(x => x.Tags, y => y.MapFrom(nd => String.Join(",", nd.Tags)))
+                 .ForMember(x => x.NoteID, y => y.Ignore())
+                 .ForMember(x => x.Notes, y => y.Ignore());
+
+
+                cfg.CreateMap<Notes, Notes>()
+                 .ForMember(x => x.Sn, y => y.Ignore())
+                 .ForMember(x => x.Types, y => y.Ignore())
+                 .ForMember(x => x.Users, y => y.Ignore())
+                 .ForMember(x => x.NoteDetails, y => y.MapFrom(n => n.NoteDetails));
+
 
                 cfg.CreateMap<Types, TypeVM>();
                 cfg.CreateMap<TypeVM, Types>();

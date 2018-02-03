@@ -1,0 +1,126 @@
+<div style="background-color:#fff;padding:1% 10%;font-size:18px;">
+  <form [formGroup]="noteForm">
+    <!--Step1 Start-->
+    <div id="step1" [hidden]="!(step == 1)">
+      <div class="row">
+        <h1 class="teal-text"><span class="label label-default">步驟1</span> 編輯筆記</h1>
+        <p name="text">使用以下編輯器修改文章。</p>
+        <textarea name="editor1"></textarea>
+      </div>
+
+      <div class="row">
+        <button class="btn-link" (click)="ExpandAndCollapse()">
+          <i class="material-icons">open_in_new</i> 展開/收合
+        </button>
+
+        <span name="text">預覽文章</span>
+
+        <div name="displayCK"
+             [hidden]="!expand"
+             style="padding:2%;border:1px solid #DDD">
+          可於上方開始輸入...
+        </div>
+      </div>
+
+      <div class="row">
+        <a class="btn teal darken-3 pull-left" [routerLink]="['/notes']">
+          <i class="material-icons">format_list_bulleted</i>
+          回到列表
+        </a>
+
+        <button class="btn teal darken-1 pull-right" (click)="GoToStep(2)">
+          <i class="material-icons">navigate_next</i> 下一步
+        </button>
+      </div>
+    </div>
+    <!--Step1 End-->
+    <!--Step2 Start-->
+    <div id="step2" [hidden]="!(step == 2)">
+      <div class="row" style="height:490px;">
+        <h1 class="teal-text"><span class="label label-default">步驟2</span> 筆記概要</h1>
+        <br />
+        <div>文章標題：<input type="text" placeholder="輸入文章的標題" name="noteTitle" formControlName="noteTitle" [(ngModel)]="note.NoteTitle"  />
+          <span *ngIf="noteForm.controls.noteTitle.errors && noteForm.controls.noteTitle.touched" [ngClass]="'error'">
+            <span *ngIf="noteForm.controls.noteTitle.errors.required">
+              文章標題必填
+            </span>
+            <span *ngIf="noteForm.controls.noteTitle.errors.maxlength">
+              必須小於50字元
+            </span>
+          </span>
+        </div>
+        <div>
+          封面圖片：<input type="file" style="display:inline"
+                      accept="image/*" (change)="ChangeFile($event)"
+                      name="notePhoto" />
+
+          <img id="blah" *ngIf="note.NotePhoto != ''" src="{{note.NotePhoto}}" 
+               alt="your image" style="height:167px;width:250px;border:1px solid #b0b0b0" />
+          <img id="blah" *ngIf="note.NotePhoto == ''" src="assets/images/noteSample1.jpg"
+               alt="your image" style="height:167px;width:250px;border:1px solid #b0b0b0" />
+
+          (建議大小: 250 x 167 pixel)
+        </div>
+        <br />
+        <div>
+          文章分類：
+          <select name="typeID" (change)="ChangeTypeSelect($event)" formControlName="articleType"
+                  [ngModel]="note.TypeID">
+            <option value="" disabled>選擇一個分類</option>
+            <option *ngFor="let type of articleType" value="{{type.TypeID}}">{{type.TypeName}}</option>
+          </select>
+          <span *ngIf="noteForm.controls.articleType.errors && noteForm.controls.articleType.touched" [ngClass]="'error'">
+            <span *ngIf="noteForm.controls.articleType.errors.required">
+              必須選擇一個文章的分類
+            </span>
+          </span>
+        </div>
+        <br />
+        <div>
+          <input type="text" id="tagInput" style="width:150px;" placeholder="輸入文章的Tag" />
+          <a href="javascript:void(0)" (click)="AddTag()">加入TAG</a>
+        </div>
+        <div>
+          <div class="tags">
+            <a href="javascript:void(0)" *ngFor="let tag of note.Tags" (click)="removeTag(tag)">
+              {{tag}}<span><i class="material-icons">clear</i></span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <button class="btn teal darken-1 pull-left" (click)="GoToStep(1)">
+          <i class="material-icons">navigate_before</i> 上一步
+        </button>
+        <button class="btn green darken-4 pull-right" (click)="SubmitArticle()" [disabled]="!(noteForm.valid)">
+          <i class="material-icons">navigate_next</i> 修改文章
+        </button>
+      </div>
+    </div>
+
+    <!--Step2 End-->
+  </form>
+</div>
+
+
+
+
+<!--自訂客製化Modal-->
+<modal id="custom-modal-savesuccess">
+  <div class="mymodal">
+    <div class="mymodal-body">
+      <h1><i class="material-icons">info</i>訊息</h1>
+      <h3>
+        {{saveStatusText}}
+
+      </h3>
+      <button class="btn btn-primary" (click)="closeModal('custom-modal-savesuccess');">關閉</button>
+    </div>
+  </div>
+  <div class="mymodal-background"></div>
+</modal>
+
+
+<!--Spinner-->
+<ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '14px' }"></ngx-loading>

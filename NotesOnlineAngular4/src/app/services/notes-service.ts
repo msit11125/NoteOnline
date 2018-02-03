@@ -46,6 +46,19 @@ export class NotesService {
       .map(res => res.json());
   }
 
+  public UpdateNote(note: Note) {
+    let headers = new Headers(
+      {
+        'Authorization': 'Bearer ' + localStorage.getItem('access_token'),
+        'Content-Type': 'application/json'
+      }
+    );
+
+    return this.http.put(environment.apiServer + "/api/notesapi", JSON.stringify(note), { headers: headers })
+      .map(res => res.json());
+  }
+
+
   public DeleteNote(noteId: string) {
     let headers = new Headers(
       {

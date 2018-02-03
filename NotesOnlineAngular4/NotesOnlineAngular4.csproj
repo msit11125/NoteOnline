@@ -25,6 +25,8 @@
     <Content Include="src\app\components\login\login.component.html" />
     <Content Include="src\app\components\navmenu\navmenu.component.css" />
     <Content Include="src\app\components\navmenu\navmenu.component.html" />
+    <Content Include="src\app\components\notes\notes-update.component.css" />
+    <Content Include="src\app\components\notes\notes-update.component.html" />
     <Content Include="src\app\components\notes\notes.component.css" />
     <Content Include="src\app\components\notes\notes.component.html" />
     <Content Include="src\app\components\notes\notes-create.component.css" />
@@ -59,6 +61,7 @@
     <TypeScriptCompile Include="src\app\components\home\home.component.ts" />
     <TypeScriptCompile Include="src\app\components\login\login.component.ts" />
     <TypeScriptCompile Include="src\app\components\navmenu\navmenu.component.ts" />
+    <TypeScriptCompile Include="src\app\components\notes\notes-update.component.ts" />
     <TypeScriptCompile Include="src\app\components\notes\notes-detail.component.ts" />
     <TypeScriptCompile Include="src\app\components\notes\notes.component.ts" />
     <TypeScriptCompile Include="src\app\components\notes\notes-create.component.ts" />

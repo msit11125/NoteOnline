@@ -45,8 +45,9 @@ export class VocabularyComponent {
     }
 
     this.searching = true;
-    this.chineseDefins;
-
+    // Clear Empty
+    this.chineseDefins = null;
+    this.fullHtml = null;
 
     // 翻譯
     this._service.Translation(this.word).subscribe(
